@@ -1,0 +1,33 @@
+{
+  "name": "unicda-requests",
+  "version": "1.0.0",
+  "description": "UNICDA Requests backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarluanEspiritusanto/UNICDA-Requests.git"
+  },
+  "keywords": [
+    "nodejs",
+    "restful",
+    "backend"
+  ],
+  "author": "Marluan Espiritusanto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarluanEspiritusanto/UNICDA-Requests/issues"
+  },
+  "homepage": "https://github.com/MarluanEspiritusanto/UNICDA-Requests#readme",
+  "devDependencies": {
+    "dotenv": "^8.0.0",
+    "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.5"
+  }
+}
