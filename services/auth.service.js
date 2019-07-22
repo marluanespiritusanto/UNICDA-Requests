@@ -2,7 +2,7 @@ const { UserRepository } = require("../repositories");
 const { JwtHelper } = require("../helpers");
 
 class AuthService {
-  async signIn(user) {
+  async signUp(user) {
     const { username } = user;
     const userExists = await UserRepository.getByUsername(username);
 
@@ -16,7 +16,7 @@ class AuthService {
     return await UserRepository.create(user);
   }
 
-  async signUp(user) {
+  async signIn(user) {
     const { username, password } = user;
     const userExits = await UserRepository.getByUsername(username);
 

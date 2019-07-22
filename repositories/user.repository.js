@@ -7,7 +7,7 @@ class UserRepository {
   }
 
   async getByUsername(username) {
-    const user = await User.findById({ username });
+    const user = await User.findOne({ username });
     return user;
   }
 
@@ -19,13 +19,15 @@ class UserRepository {
   async create(user) {
     const { email, username, password } = user;
 
-    const detail = UserDetail.create();
+    const detail = new UserDetail();
+    await detail.save();
+
     const createdUser = await User.create([
       {
         email,
         username,
         password,
-        details: detail
+        details: detail._id
       }
     ]);
 

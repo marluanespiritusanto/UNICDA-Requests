@@ -1,3 +1,4 @@
 module.exports = {
-  HomeRoutes: require("./home.routes")
+  HomeRoutes: require("./home.routes"),
+  AuthRoutes: require("./auth.routes")
 };

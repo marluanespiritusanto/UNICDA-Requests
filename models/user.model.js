@@ -9,8 +9,7 @@ const UserSchema = new Schema({
   details: {
     type: Schema.Types.ObjectId,
     ref: "UserDetail",
-    required: true,
-    default: {}
+    required: true
   },
   status: { type: String }
 });
@@ -31,6 +30,7 @@ UserSchema.pre("save", function(next) {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(user.password, salt);
   user.password = hashedPassword;
+  next();
 });
 
 UserSchema.methods.comparePasswords = function(password) {
