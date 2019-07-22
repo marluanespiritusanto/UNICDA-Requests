@@ -1,4 +1,4 @@
-module.export = {
+module.exports = {
   User: require("./user.model"),
   UserDetail: require("./user-detail.model"),
   UserRole: require("./user-roles.model"),
