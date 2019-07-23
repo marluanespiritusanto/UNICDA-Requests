@@ -4,17 +4,20 @@ const bcrypt = require("bcryptjs");
 const UserDetail = require("./user-detail.model");
 const { StatusHelper, RoleHelper } = require("../helpers");
 
-const UserSchema = new Schema({
-  email: { type: String, unique: true, lowercase: true, required: true },
-  username: { type: String, required: true, unique: true },
-  password: { type: String },
-  details: {
-    type: Schema.Types.ObjectId,
-    ref: "UserDetail"
+const UserSchema = new Schema(
+  {
+    email: { type: String, unique: true, lowercase: true, required: true },
+    username: { type: String, required: true, unique: true },
+    password: { type: String },
+    details: {
+      type: Schema.Types.ObjectId,
+      ref: "UserDetail"
+    },
+    roles: [{ type: Schema.Types.ObjectId, ref: "Role" }],
+    status: { type: String, default: StatusHelper.ACTIVE }
   },
-  roles: [{ type: Schema.Types.ObjectId, ref: "Role" }],
-  status: { type: String, default: StatusHelper.ACTIVE }
-});
+  { timestamps: { createdAt: true, updatedAt: true } }
+);
 
 UserSchema.methods.toJSON = function() {
   let user = this.toObject();
