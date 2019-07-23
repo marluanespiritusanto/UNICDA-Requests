@@ -4,22 +4,27 @@ const { StatusHelper } = require("../helpers");
 class UserRepository {
   async get(id) {
     const user = await User.findOne({
-      id,
+      _id: id,
       status: StatusHelper.ACTIVE
-    }).populate("userDetail");
+    })
+      .populate("details")
+      .populate("roles", "name");
 
     return user;
   }
 
   async getUserByUsername(username) {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username })
+      .populate("details")
+      .populate("roles", "name");
+
     return user;
   }
 
   async getAll() {
-    const users = await User.find({ status: StatusHelper.ACTIVE }).populate(
-      "userDetail"
-    );
+    const users = await User.find({ status: StatusHelper.ACTIVE })
+      .populate("roles", "name")
+      .populate("details");
 
     return users;
   }
@@ -30,7 +35,13 @@ class UserRepository {
   }
 
   async update(id, user) {
-    const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
+    const { username } = user;
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { username },
+      { new: true }
+    );
+
     return updatedUser;
   }
 

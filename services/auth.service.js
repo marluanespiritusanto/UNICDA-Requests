@@ -1,5 +1,5 @@
-const { UserRepository, RoleRepository } = require("../repositories");
 const { JwtHelper } = require("../helpers");
+const { UserService } = require("../services");
 
 class AuthService {
   async signUp(user) {
@@ -18,8 +18,8 @@ class AuthService {
 
   async signIn(user) {
     const { username, password } = user;
-    const userExits = await UserRepository.getUserByUsername(username);
-    // const roles = await RoleRepository.getUserRoles(userExits._id);
+
+    const userExits = await UserService.getUserByUsername(username);
 
     if (!userExits) {
       const error = new Error();
@@ -37,7 +37,12 @@ class AuthService {
       throw error;
     }
 
-    const token = JwtHelper.generateToken(userExits);
+    const encodeUser = {};
+    encodeUser.role = userExits.roles.map(role => role.name);
+    encodeUser.username = userExits.username;
+    encodeUser.id = userExits._id;
+
+    const token = JwtHelper.generateToken(encodeUser);
 
     return token;
   }
