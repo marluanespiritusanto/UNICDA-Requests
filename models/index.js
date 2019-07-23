@@ -1,7 +1,6 @@
 module.exports = {
   User: require("./user.model"),
   UserDetail: require("./user-detail.model"),
-  UserRole: require("./user-roles.model"),
   Role: require("./role.model"),
   Request: require("./request.model"),
   RequestType: require("./request-type.model"),

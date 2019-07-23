@@ -1,10 +1,10 @@
-const { UserRepository } = require("../repositories");
+const { UserRepository, RoleRepository } = require("../repositories");
 const { JwtHelper } = require("../helpers");
 
 class AuthService {
   async signUp(user) {
     const { username } = user;
-    const userExists = await UserRepository.getByUsername(username);
+    const userExists = await UserRepository.getUserByUsername(username);
 
     if (userExists) {
       const error = new Error();
@@ -18,7 +18,8 @@ class AuthService {
 
   async signIn(user) {
     const { username, password } = user;
-    const userExits = await UserRepository.getByUsername(username);
+    const userExits = await UserRepository.getUserByUsername(username);
+    // const roles = await RoleRepository.getUserRoles(userExits._id);
 
     if (!userExits) {
       const error = new Error();

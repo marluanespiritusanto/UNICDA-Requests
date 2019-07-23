@@ -1,36 +1,31 @@
-const { User, UserDetail } = require("../models");
+const { User } = require("../models");
+const { StatusHelper } = require("../helpers");
 
 class UserRepository {
   async get(id) {
-    const user = await User.findById(id).populate("userDetail");
+    const user = await User.findOne({
+      id,
+      status: StatusHelper.ACTIVE
+    }).populate("userDetail");
+
     return user;
   }
 
-  async getByUsername(username) {
+  async getUserByUsername(username) {
     const user = await User.findOne({ username });
     return user;
   }
 
   async getAll() {
-    const users = await User.find().populate("userDetail");
+    const users = await User.find({ status: StatusHelper.ACTIVE }).populate(
+      "userDetail"
+    );
+
     return users;
   }
 
   async create(user) {
-    const { email, username, password } = user;
-
-    const detail = new UserDetail();
-    await detail.save();
-
-    const createdUser = await User.create([
-      {
-        email,
-        username,
-        password,
-        details: detail._id
-      }
-    ]);
-
+    const createdUser = await User.create([user]);
     return createdUser;
   }
 
