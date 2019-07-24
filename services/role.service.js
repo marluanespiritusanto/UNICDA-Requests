@@ -1,5 +1,4 @@
 const { RoleRepository } = require("../repositories");
-
 class RoleService {
   async getRole(id) {
     const role = await RoleRepository.get(id);

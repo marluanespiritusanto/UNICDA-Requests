@@ -1,6 +1,6 @@
+require("express-async-errors");
 const express = require("express");
 const server = express();
-require("express-async-errors");
 const bodyParser = require("body-parser");
 const { ErrorMiddleware, NotFoundMiddleware } = require("./middlewares");
 const { HomeRoutes, AuthRoutes, RoleRoutes, UserRoutes } = require("./routes");
