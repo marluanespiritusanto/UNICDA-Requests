@@ -1,35 +1,38 @@
-const { RoleService } = require("../services");
+let _roleService = null;
 
 class RoleController {
+  constructor({ RoleService }) {
+    _roleService = RoleService;
+  }
   async getRole(req, res) {
     const { id } = req.params;
-    const role = await RoleService.getRole(id);
+    const role = await _roleService.getRole(id);
     return res.send(role);
   }
 
   async getAllRoles(req, res) {
-    const roles = await RoleService.getAllRoles();
+    const roles = await _roleService.getAllRoles();
     return res.send(roles);
   }
 
   async createRole(req, res) {
     const { body } = req;
-    const createdRole = await RoleService.createRole(body);
+    const createdRole = await _roleService.createRole(body);
     return res.status(201).send(createdRole);
   }
 
   async updateRole(req, res) {
     const { body } = req;
     const { id } = req.params;
-    const updatedRole = await RoleService.updateRole(id, body);
+    const updatedRole = await _roleService.updateRole(id, body);
     return res.send(updatedRole);
   }
 
   async deleteRole(req, res) {
     const { id } = req.params;
-    const deletedUser = await RoleService.deleteRole(id);
+    const deletedUser = await _roleService.deleteRole(id);
     return res.send(deletedUser);
   }
 }
 
-module.exports = new RoleController();
+module.exports = RoleController;

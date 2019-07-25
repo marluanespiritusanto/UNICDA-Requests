@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
-const RoleService = require("../services/role.service");
 const { StatusHelper, RoleHelper } = require("../helpers");
+const Role = require("./role.model");
 
 const UserSchema = new Schema(
   {
@@ -37,7 +37,7 @@ UserSchema.pre("save", async function(next) {
   const hashedPassword = bcrypt.hashSync(user.password, salt);
   user.password = hashedPassword;
 
-  const generalRole = await RoleService.getRoleByName(RoleHelper.GENERAL);
+  const generalRole = await Role.findOne({ name: RoleHelper.GENERAL });
   user.roles.push(generalRole);
 
   next();

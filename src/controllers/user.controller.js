@@ -1,35 +1,39 @@
-const { UserService } = require("../services");
+let _userService = null;
 
 class UserController {
+  constructor({ UserService }) {
+    _userService = UserService;
+  }
+
   async getUser(req, res) {
     const { id } = req.params;
-    const role = await UserService.getUser(id);
+    const role = await _userService.getUser(id);
     return res.send(role);
   }
 
   async getAllUsers(req, res) {
-    const roles = await UserService.getAllUsers();
+    const roles = await _userService.getAllUsers();
     return res.send(roles);
   }
 
   async createUser(req, res) {
     const { body } = req;
-    const createdUser = await UserService.createUser(body);
+    const createdUser = await _userService.createUser(body);
     return res.status(201).send(createdUser);
   }
 
   async updateUser(req, res) {
     const { body } = req;
     const { id } = req.params;
-    const updatedUser = await UserService.updateUser(id, body);
+    const updatedUser = await _userService.updateUser(id, body);
     return res.send(updatedUser);
   }
 
   async deleteUser(req, res) {
     const { id } = req.params;
-    const deletedUser = await UserService.deleteUser(id);
+    const deletedUser = await _userService.deleteUser(id);
     return res.send(deletedUser);
   }
 }
 
-module.exports = new UserController();
+module.exports = UserController;

@@ -1,10 +1,14 @@
 const { JwtHelper } = require("../helpers");
-const UserService = require("../services/user.service");
+
+let _userService = null;
 
 class AuthService {
+  constructor({ UserService }) {
+    _userService = UserService;
+  }
   async signUp(user) {
     const { username } = user;
-    const userExists = await UserService.getUserByUsername(username);
+    const userExists = await _userService.getUserByUsername(username);
 
     if (userExists) {
       const error = new Error();
@@ -13,13 +17,13 @@ class AuthService {
       throw error;
     }
 
-    return await UserService.createUser(user);
+    return await _userService.createUser(user);
   }
 
   async signIn(user) {
     const { username, password } = user;
 
-    const userExits = await UserService.getUserByUsername(username);
+    const userExits = await _userService.getUserByUsername(username);
 
     if (!userExits) {
       const error = new Error();
@@ -48,4 +52,4 @@ class AuthService {
   }
 }
 
-module.exports = new AuthService();
+module.exports = AuthService;

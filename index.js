@@ -1,13 +1,11 @@
-const server = require("./server");
-const { PORT, MONGO_URI } = require("./config");
+const container = require("./src/server/container");
+const server = container.resolve("app");
+const { MONGO_URI } = container.resolve("config");
+
 const mongoose = require("mongoose");
 mongoose.set("useCreateIndex", true);
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useFindAndModify: true })
-  .then(() => {
-    server.listen(PORT, () => {
-      console.log("Application running on port " + PORT);
-    });
-  })
+  .then(() => server.start())
   .catch(console.log);
