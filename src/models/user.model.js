@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
+const { compareSync, hashSync, genSaltSync } = require("bcryptjs");
 const { StatusHelper, RoleHelper } = require("../helpers");
 const Role = require("./role.model");
 
@@ -33,8 +33,8 @@ UserSchema.pre("save", async function(next) {
     return next();
   }
 
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(user.password, salt);
+  const salt = genSaltSync(10);
+  const hashedPassword = hashSync(user.password, salt);
   user.password = hashedPassword;
 
   const generalRole = await Role.findOne({ name: RoleHelper.GENERAL });
@@ -44,7 +44,7 @@ UserSchema.pre("save", async function(next) {
 });
 
 UserSchema.methods.comparePasswords = function(password) {
-  return bcrypt.compareSync(password, this.password);
+  return compareSync(password, this.password);
 };
 
 module.exports = mongoose.model("User", UserSchema);
