@@ -1,3 +1,4 @@
 module.exports = {
-  RoleServiceMock: require("./role.service.mock")
+  RoleModelMock: require("./role.model.mock"),
+  RoleRepositoryMock: require("./role.repository.mock")
 };
