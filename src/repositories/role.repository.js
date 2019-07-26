@@ -1,29 +1,33 @@
-const { Role } = require("../models");
 const { StatusHelper } = require("../helpers");
 
+let _role = null;
+
 class RoleRepository {
+  constructor({ Role }) {
+    _role = Role;
+  }
   async get(id) {
-    const role = await Role.findOne({ _id: id, status: StatusHelper.ACTIVE });
+    const role = await _role.findOne({ _id: id, status: StatusHelper.ACTIVE });
     return role;
   }
 
   async getRoleByName(name) {
-    const role = await Role.findOne({ name, status: StatusHelper.ACTIVE });
+    const role = await _role.findOne({ name, status: StatusHelper.ACTIVE });
     return role;
   }
 
   async getAll() {
-    const roles = await Role.find({ status: StatusHelper.ACTIVE });
+    const roles = await _role.find({ status: StatusHelper.ACTIVE });
     return roles;
   }
 
   async create(role) {
-    const createdRole = await Role.create([role]);
+    const createdRole = await _role.create([role]);
     return createdRole;
   }
 
   async update(id, role) {
-    const updatedRole = await Role.findByIdAndUpdate({ _id: id }, role, {
+    const updatedRole = await _role.findByIdAndUpdate({ _id: id }, role, {
       new: true
     });
 
@@ -31,9 +35,9 @@ class RoleRepository {
   }
 
   async delete(id) {
-    await Role.findByIdAndDelete(id);
+    await _role.findByIdAndDelete(id);
     return true;
   }
 }
 
-module.exports = new RoleRepository();
+module.exports = RoleRepository;

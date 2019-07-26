@@ -30,6 +30,9 @@ const {
   UserService
 } = require("../services");
 
+// models
+const { Role, User } = require("../models");
+
 const container = createContainer();
 
 container
@@ -57,8 +60,12 @@ container
     RoleController: asClass(RoleController.bind(RoleController)).singleton()
   })
   .register({
-    UserRepository: asValue(UserRepository),
-    RoleRepository: asValue(RoleRepository)
+    UserRepository: asClass(UserRepository).singleton(),
+    RoleRepository: asClass(RoleRepository).singleton()
+  })
+  .register({
+    Role: asValue(Role),
+    User: asValue(User)
   });
 
 module.exports = container;

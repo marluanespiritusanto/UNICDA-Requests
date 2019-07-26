@@ -1,12 +1,17 @@
-const { User } = require("../models");
 const { StatusHelper } = require("../helpers");
 
+let _user = null;
 class UserRepository {
+  constructor({ User }) {
+    _user = User;
+  }
+
   async get(id) {
-    const user = await User.findOne({
-      _id: id,
-      status: StatusHelper.ACTIVE
-    })
+    const user = await _user
+      .findOne({
+        _id: id,
+        status: StatusHelper.ACTIVE
+      })
       .populate("details")
       .populate("roles", "name");
 
@@ -14,7 +19,8 @@ class UserRepository {
   }
 
   async getUserByUsername(username) {
-    const user = await User.findOne({ username })
+    const user = await _user
+      .findOne({ username })
       .populate("details")
       .populate("roles", "name");
 
@@ -22,7 +28,8 @@ class UserRepository {
   }
 
   async getAll() {
-    const users = await User.find({ status: StatusHelper.ACTIVE })
+    const users = await _user
+      .find({ status: StatusHelper.ACTIVE })
       .populate("roles", "name")
       .populate("details");
 
@@ -30,13 +37,13 @@ class UserRepository {
   }
 
   async create(user) {
-    const createdUser = await User.create([user]);
+    const createdUser = await _user.create([user]);
     return createdUser;
   }
 
   async update(id, user) {
     const { username } = user;
-    const updatedUser = await User.findByIdAndUpdate(
+    const updatedUser = await _user.findByIdAndUpdate(
       id,
       { username },
       { new: true }
@@ -46,9 +53,9 @@ class UserRepository {
   }
 
   async delete(id) {
-    const deletedUser = await User.findByIdAndRemove(id);
+    const deletedUser = await _user.findByIdAndRemove(id);
     return deletedUser;
   }
 }
 
-module.exports = new UserRepository();
+module.exports = UserRepository;
