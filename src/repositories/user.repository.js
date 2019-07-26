@@ -53,8 +53,8 @@ class UserRepository {
   }
 
   async delete(id) {
-    const deletedUser = await _user.findByIdAndRemove(id);
-    return deletedUser;
+    const deletedUser = await _user.findByIdAndDelete(id);
+    return deletedUser.toJSON();
   }
 }
 

@@ -14,8 +14,17 @@ describe("Role Service", () => {
     RoleRepository.get.mockReturnValue(role);
 
     const _roleService = new RoleService({ RoleRepository });
-    const expected = await _roleService.getRole("507f191e810c19729de860ea");
-    expect(JSON.parse(JSON.stringify(expected))).toMatchObject(role);
+    const expected = await _roleService.getRole(role._id);
+    expect(expected).toMatchObject(role);
+  });
+
+  it("Should find a role by id", async () => {
+    const RoleRepository = RoleRepositoryMock;
+    RoleRepository.getRoleByName.mockReturnValue(role);
+
+    const _roleService = new RoleService({ RoleRepository });
+    const expected = await _roleService.getRoleByName(role._id);
+    expect(expected).toMatchObject(role);
   });
 
   it("Should return a role collection", async () => {
@@ -24,6 +33,33 @@ describe("Role Service", () => {
 
     const _roleService = new RoleService({ RoleRepository });
     const expected = await _roleService.getAllRoles();
-    expect(JSON.parse(JSON.stringify(expected))).toMatchObject(roles);
+    expect(expected).toMatchObject(roles);
+  });
+
+  it("Should create a role", async () => {
+    const RoleRepository = RoleRepositoryMock;
+    RoleRepository.create.mockReturnValue(role);
+
+    const _roleService = new RoleService({ RoleRepository });
+    const expected = await _roleService.createRole(role);
+    expect(expected).toMatchObject(role);
+  });
+
+  it("Should update a role by id", async () => {
+    const RoleRepository = RoleRepositoryMock;
+    RoleRepository.update.mockReturnValue(role);
+
+    const _roleService = new RoleService({ RoleRepository });
+    const expected = await _roleService.updateRole(role._id, role);
+    expect(expected).toMatchObject(role);
+  });
+
+  it("Should delete a role by id", async () => {
+    const RoleRepository = RoleRepositoryMock;
+    RoleRepository.update.mockReturnValue(role);
+
+    const _roleService = new RoleService({ RoleRepository });
+    const expected = await _roleService.updateRole(role._id);
+    expect(expected).toMatchObject(role);
   });
 });
