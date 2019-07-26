@@ -35,8 +35,8 @@ class RoleRepository {
   }
 
   async delete(id) {
-    await _role.findByIdAndDelete(id);
-    return true;
+    const deletedRole = await _role.findByIdAndDelete(id);
+    return deletedRole.toJSON();
   }
 }
 
