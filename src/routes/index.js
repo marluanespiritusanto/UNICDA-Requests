@@ -9,7 +9,8 @@ module.exports = function({
   RoleRoutes,
   AuthRoutes,
   UserRoutes,
-  RequestRoutes
+  RequestRoutes,
+  FormTypeRoutes
 }) {
   const router = express.Router();
   const apiRoute = express.Router();
@@ -24,6 +25,7 @@ module.exports = function({
   apiRoute.use("/auth", AuthRoutes);
   apiRoute.use("/user", UserRoutes);
   apiRoute.use("/request", RequestRoutes);
+  apiRoute.use("/formType", FormTypeRoutes);
 
   router.use("/api", apiRoute);
   router.use(NotFoundMiddleware);
