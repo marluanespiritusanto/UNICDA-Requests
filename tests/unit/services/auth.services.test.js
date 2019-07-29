@@ -1,5 +1,5 @@
 const { AuthService } = require("../../../src/services");
-const { AuthRepositoryMock } = require("../../mocks");
+const { UserRepositoryMock } = require("../../mocks");
 
 const {
   UserModelMock: { user }
@@ -11,24 +11,48 @@ describe("Auth Service", () => {
   });
 
   it("Should signup an user", async () => {
-    const AuthRepository = AuthRepositoryMock;
-    AuthRepository.signUp.mockReturnValue(user);
+    const UserRepository = UserRepositoryMock;
+    UserRepository.getUserByUsername.mockReturnValue(null);
+    UserRepository.create.mockReturnValue(user);
 
-    const _authService = new AuthService({ AuthRepository });
+    const _authService = new AuthService({ UserRepository });
     const expected = await _authService.signUp({
       username: "marluanespiritusanto",
       email: "marluan@test.com",
       password: "mysecretpassword"
     });
+
     expect(expected).toMatchObject(user);
   });
 
-  // it("Should find a role by id", async () => {
-  //   const RoleRepository = RoleRepositoryMock;
-  //   RoleRepository.getRoleByName.mockReturnValue(role);
+  it("Should throw an error trying to create an existing user", async () => {
+    const UserRepository = UserRepositoryMock;
+    UserRepository.getUserByUsername.mockReturnValue(user);
+    UserRepository.create.mockReturnValue(user);
 
-  //   const _roleService = new RoleService({ RoleRepository });
-  //   const expected = await _roleService.getRoleByName(role._id);
-  //   expect(expected).toMatchObject(role);
+    const _authService = new AuthService({ UserRepository });
+
+    expect(
+      _authService.signUp({
+        username: "marluanespiritusanto",
+        email: "marluan@test.com",
+        password: "mysecretpassword"
+      })
+    ).rejects.toThrow(Error);
+  });
+
+  // it("Should login a user", async () => {
+  //   const UserRepository = UserRepositoryMock;
+  //   UserRepository.getUserByUsername.mockReturnValue(user);
+
+  //   const _authService = new AuthService({ UserRepository });
+  //   const expected = await _authService.signIn({
+  //     username: user.username,
+  //     password: user.password
+  //   });
+
+  //   console.log(expected);
+
+  //   expect(expected).toBeTruthy();
   // });
 });

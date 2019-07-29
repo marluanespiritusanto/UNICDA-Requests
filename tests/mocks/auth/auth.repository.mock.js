@@ -1,4 +1,4 @@
 module.exports = {
-  signUp: jest.fn(),
-  signIn: jest.fn()
+  create: jest.fn(),
+  getUserByUsername: jest.fn()
 };
