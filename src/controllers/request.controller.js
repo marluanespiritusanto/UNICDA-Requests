@@ -42,13 +42,19 @@ class RequestController {
 
   async createRequestForm(req, res) {
     const { requestId } = req.params;
-    const { body } = req;
+    const { form } = req.body;
     const createdRequestForm = await _requestService.createRequestForm(
       requestId,
-      body
+      form
     );
 
     return res.status(201).send(createdRequestForm);
+  }
+
+  async getRequestForm(req, res) {
+    const { requestId } = req.params;
+    const form = await _requestService.getRequestForm(requestId);
+    return res.send(form);
   }
 }
 

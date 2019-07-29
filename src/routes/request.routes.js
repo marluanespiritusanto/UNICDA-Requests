@@ -8,7 +8,8 @@ module.exports = function({ RequestController }) {
   router.post("", RequestController.createRequest);
   router.patch("/:id", RequestController.updateRequest);
   router.delete("/:id", RequestController.deleteRequest);
-  router.post("/:requestId", RequestController.createRequestForm);
+  router.post("/:requestId/createForm", RequestController.createRequestForm);
+  router.get("/:requestId/getForm", RequestController.getRequestForm);
 
   return router;
 };

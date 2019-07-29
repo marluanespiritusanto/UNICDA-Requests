@@ -34,17 +34,24 @@ class RequestService {
   }
 
   async createRequestForm(requestId, form) {
-    const requestForm = {
-      requestId,
-      formTypeId: form.formTypeId,
-      label: form.label
-    };
+    const requestForm = form.map(({ formTypeId, label }) => {
+      return {
+        requestId,
+        formTypeId,
+        label
+      };
+    });
 
     const createdRequestForm = await _requestRepository.createRequestForm(
       requestForm
     );
 
     return createdRequestForm;
+  }
+
+  async getRequestForm(requestId) {
+    const form = await _requestRepository.getRequestForm(requestId);
+    return form;
   }
 }
 

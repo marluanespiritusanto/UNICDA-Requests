@@ -61,8 +61,16 @@ class RequestRepository {
   }
 
   async createRequestForm(form) {
-    const createdRequestForm = await _requestForm.create([form]);
+    const createdRequestForm = await _requestForm.create(form);
     return createdRequestForm;
+  }
+
+  async getRequestForm(requestId) {
+    const form = await _requestForm
+      .find({ requestId })
+      .populate("formTypeId", "name");
+
+    return form;
   }
 }
 
