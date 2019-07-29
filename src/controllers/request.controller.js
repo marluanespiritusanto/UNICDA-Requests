@@ -12,7 +12,12 @@ class RequestController {
   }
 
   async getAllRequests(req, res) {
-    const requests = await _requestService.getAllRequests();
+    const { pageSize, pageNum } = req.query;
+
+    const requests = await _requestService.getAllRequests(
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
     return res.send(requests);
   }
 

@@ -27,8 +27,14 @@ class RequestRepository {
     return request;
   }
 
-  async getAll() {
-    const requests = await _request.find({ status: StatusHelper.ACTIVE });
+  async getAll(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requests = await _request
+      .find({ status: StatusHelper.ACTIVE })
+      .skip(skips)
+      .limit(pageSize);
+
     return requests;
   }
 

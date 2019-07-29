@@ -9,8 +9,8 @@ class FormTypeService {
     return formType;
   }
 
-  async getAllFormTypes() {
-    const formTypes = await _formTypeRepository.getAll();
+  async getAllFormTypes(pageSize, pageNum) {
+    const formTypes = await _formTypeRepository.getAll(pageSize, pageNum);
     return formTypes;
   }
 

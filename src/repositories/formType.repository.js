@@ -23,8 +23,14 @@ class FormTypeRepository {
     return formType;
   }
 
-  async getAll() {
-    const formTypes = await _formType.find({ status: StatusHelper.ACTIVE });
+  async getAll(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const formTypes = await _formType
+      .find({ status: StatusHelper.ACTIVE })
+      .skip(skips)
+      .limit(pageSize);
+
     return formTypes;
   }
 

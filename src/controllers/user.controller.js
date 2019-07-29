@@ -12,7 +12,12 @@ class UserController {
   }
 
   async getAllUsers(req, res) {
-    const roles = await _userService.getAllUsers();
+    const { pageSize, pageNum } = req.query;
+
+    const roles = await _userService.getAllUsers(
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
     return res.send(roles);
   }
 

@@ -14,8 +14,8 @@ class RequestService {
     return request;
   }
 
-  async getAllRequests() {
-    const requests = await _requestRepository.getAll();
+  async getAllRequests(pageSize, pageNum) {
+    const requests = await _requestRepository.getAll(pageSize, pageNum);
     return requests;
   }
 

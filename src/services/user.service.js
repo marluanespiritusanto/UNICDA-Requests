@@ -15,8 +15,8 @@ class UserService {
     return user;
   }
 
-  async getAllUsers() {
-    const users = await _userRepository.getAll();
+  async getAllUsers(pageSize, pageNum) {
+    const users = await _userRepository.getAll(pageSize, pageNum);
     return users;
   }
 

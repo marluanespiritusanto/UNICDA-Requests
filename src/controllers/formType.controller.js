@@ -12,7 +12,12 @@ class FormTypeController {
   }
 
   async getAllFormTypes(req, res) {
-    const formTypes = await _formTypeService.getAllFormTypes();
+    const { pageSize, pageNum } = req.query;
+    const formTypes = await _formTypeService.getAllFormTypes(
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
+
     return res.send(formTypes);
   }
 
