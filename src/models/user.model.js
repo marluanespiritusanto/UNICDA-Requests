@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 const { compareSync, hashSync, genSaltSync } = require("bcryptjs");
 const { StatusHelper, RoleHelper } = require("../helpers");
 const Role = require("./role.model");
