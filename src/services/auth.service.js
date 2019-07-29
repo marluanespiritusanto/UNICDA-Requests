@@ -1,14 +1,14 @@
 const { JwtHelper } = require("../helpers");
 
-let _userService = null;
+let _userRepository = null;
 
 class AuthService {
-  constructor({ UserService }) {
-    _userService = UserService;
+  constructor({ UserRepository }) {
+    _userRepository = UserRepository;
   }
   async signUp(user) {
     const { username } = user;
-    const userExists = await _userService.getUserByUsername(username);
+    const userExists = await _userRepository.getUserByUsername(username);
 
     if (userExists) {
       const error = new Error();
@@ -17,13 +17,13 @@ class AuthService {
       throw error;
     }
 
-    return await _userService.createUser(user);
+    return await _userRepository.create(user);
   }
 
   async signIn(user) {
     const { username, password } = user;
 
-    const userExits = await _userService.getUserByUsername(username);
+    const userExits = await _userRepository.getUserByUsername(username);
 
     if (!userExits) {
       const error = new Error();

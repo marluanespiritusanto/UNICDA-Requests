@@ -4,6 +4,7 @@ class RequestController {
   constructor({ RequestService }) {
     _requestService = RequestService;
   }
+
   async getRequest(req, res) {
     const { id } = req.params;
     const request = await _requestService.getRequest(id);
@@ -32,6 +33,17 @@ class RequestController {
     const { id } = req.params;
     const deletedUser = await _requestService.deleteRequest(id);
     return res.send(deletedUser);
+  }
+
+  async createRequestForm(req, res) {
+    const { requestId } = req.params;
+    const { body } = req;
+    const createdRequestForm = await _requestService.createRequestForm(
+      requestId,
+      body
+    );
+
+    return res.status(201).send(createdRequestForm);
   }
 }
 

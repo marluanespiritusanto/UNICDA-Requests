@@ -32,6 +32,20 @@ class RequestService {
   async deleteRequest(id) {
     return await _requestRepository.delete(id);
   }
+
+  async createRequestForm(requestId, form) {
+    const requestForm = {
+      requestId,
+      formTypeId: form.formTypeId,
+      label: form.label
+    };
+
+    const createdRequestForm = await _requestRepository.createRequestForm(
+      requestForm
+    );
+
+    return createdRequestForm;
+  }
 }
 
 module.exports = RequestService;

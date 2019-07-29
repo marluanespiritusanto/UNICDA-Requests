@@ -3,11 +3,8 @@ const { Schema } = mongoose;
 
 const RequestSchema = new Schema(
   {
-    requestTypeId: {
-      type: Schema.Types.ObjectId,
-      ref: "RequestType",
-      required: true
-    },
+    name: { type: String },
+    description: { type: String },
     status: { type: String }
   },
   { timestamps: { createdAt: true, updatedAt: true } }
