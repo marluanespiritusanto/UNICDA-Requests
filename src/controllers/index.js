@@ -4,5 +4,6 @@ module.exports = {
   RoleController: require("./role.controller"),
   UserController: require("./user.controller"),
   RequestController: require("./request.controller"),
-  FormTypeController: require("./formType.controller")
+  FormTypeController: require("./formType.controller"),
+  StepController: require("./step.controller")
 };

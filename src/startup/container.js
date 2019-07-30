@@ -10,7 +10,8 @@ const {
   RoleRoutes,
   UserRoutes,
   RequestRoutes,
-  FormTypeRoutes
+  FormTypeRoutes,
+  StepRoutes
 } = require("../routes/index.routes");
 
 // controllers
@@ -20,7 +21,8 @@ const {
   RoleController,
   UserController,
   RequestController,
-  FormTypeController
+  FormTypeController,
+  StepController
 } = require("../controllers");
 
 // repositories
@@ -28,7 +30,8 @@ const {
   UserRepository,
   RoleRepository,
   RequestRepository,
-  FormTypeRepository
+  FormTypeRepository,
+  StepRepository
 } = require("../repositories");
 
 // services
@@ -38,7 +41,8 @@ const {
   RoleService,
   UserService,
   RequestService,
-  FormTypeService
+  FormTypeService,
+  StepService
 } = require("../services");
 
 // models
@@ -48,7 +52,9 @@ const {
   Request,
   RequestForm,
   FormType,
-  RequestHistory
+  RequestHistory,
+  Step,
+  RequestStep
 } = require("../models");
 
 const container = createContainer();
@@ -65,7 +71,8 @@ container
     UserRoutes: asFunction(UserRoutes).singleton(),
     RoleRoutes: asFunction(RoleRoutes).singleton(),
     RequestRoutes: asFunction(RequestRoutes).singleton(),
-    FormTypeRoutes: asFunction(FormTypeRoutes).singleton()
+    FormTypeRoutes: asFunction(FormTypeRoutes).singleton(),
+    StepRoutes: asFunction(StepRoutes).singleton()
   })
   .register({
     HomeService: asClass(HomeService).singleton(),
@@ -73,7 +80,8 @@ container
     UserService: asClass(UserService).singleton(),
     RoleService: asClass(RoleService).singleton(),
     RequestService: asClass(RequestService).singleton(),
-    FormTypeService: asClass(FormTypeService).singleton()
+    FormTypeService: asClass(FormTypeService).singleton(),
+    StepService: asClass(StepService).singleton()
   })
   .register({
     HomeController: asClass(HomeController.bind(HomeController)).singleton(),
@@ -85,13 +93,15 @@ container
     ).singleton(),
     FormTypeController: asClass(
       FormTypeController.bind(FormTypeController)
-    ).singleton()
+    ).singleton(),
+    StepController: asClass(StepController.bind(StepController)).singleton()
   })
   .register({
     UserRepository: asClass(UserRepository).singleton(),
     RoleRepository: asClass(RoleRepository).singleton(),
     RequestRepository: asClass(RequestRepository).singleton(),
-    FormTypeRepository: asClass(FormTypeRepository).singleton()
+    FormTypeRepository: asClass(FormTypeRepository).singleton(),
+    StepRepository: asClass(StepRepository).singleton()
   })
   .register({
     Role: asValue(Role),
@@ -99,7 +109,9 @@ container
     Request: asValue(Request),
     RequestForm: asValue(RequestForm),
     FormType: asValue(FormType),
-    RequestHistory: asValue(RequestHistory)
+    RequestHistory: asValue(RequestHistory),
+    Step: asValue(Step),
+    RequestStep: asValue(RequestStep)
   });
 
 module.exports = container;
