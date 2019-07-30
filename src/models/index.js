@@ -4,5 +4,7 @@ module.exports = {
   Request: require("./request.model"),
   RequestForm: require("./requestForm.model"),
   FormType: require("./formTypes.model"),
-  RequestHistory: require("./requestHistory.model")
+  RequestHistory: require("./requestHistory.model"),
+  Step: require("./step.model"),
+  RequestStep: require("./requestStep.model")
 };

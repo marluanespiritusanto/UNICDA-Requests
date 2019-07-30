@@ -60,6 +60,14 @@ class UserRepository {
     const deletedUser = await _user.findByIdAndDelete(id);
     return deletedUser.toJSON();
   }
+
+  async setRoleToUser(userId, roleId) {
+    const user = await this.get(userId);
+    user.roles.push(roleId);
+    await user.save();
+
+    return user;
+  }
 }
 
 module.exports = UserRepository;

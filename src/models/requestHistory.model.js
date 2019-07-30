@@ -19,7 +19,7 @@ const RequestHistorychema = new Schema(
       ref: "Request",
       required: true
     },
-    status: { type: String, default: StatusHelper.ACTIVE }
+    status: { type: String }
   },
   { timestamps: { createdAt: true, updatedAt: true } }
 );

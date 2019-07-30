@@ -4,5 +4,6 @@ module.exports = {
   UserRoutes: require("./user.routes"),
   RoleRoutes: require("./role.routes"),
   RequestRoutes: require("./request.routes"),
-  FormTypeRoutes: require("./formType.routes")
+  FormTypeRoutes: require("./formType.routes"),
+  StepRoutes: require("./step.routes")
 };

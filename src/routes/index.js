@@ -12,7 +12,8 @@ module.exports = function({
   AuthRoutes,
   UserRoutes,
   RequestRoutes,
-  FormTypeRoutes
+  FormTypeRoutes,
+  StepRoutes
 }) {
   const router = express.Router();
   const apiRoute = express.Router();
@@ -28,6 +29,7 @@ module.exports = function({
   apiRoute.use("/user", UserRoutes);
   apiRoute.use("/request", RequestRoutes);
   apiRoute.use("/formType", FormTypeRoutes);
+  apiRoute.use("/step", StepRoutes);
 
   router.use("/api", apiRoute);
   router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
