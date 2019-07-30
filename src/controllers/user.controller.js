@@ -39,6 +39,14 @@ class UserController {
     const deletedUser = await _userService.deleteUser(id);
     return res.send(deletedUser);
   }
+
+  async setRoleToUser(req, res) {
+    const { roleId } = req.body;
+    const { id: userId } = req.params;
+
+    const roleSetted = await _userService.setRoleToUser(userId, roleId);
+    return res.send(roleSetted);
+  }
 }
 
 module.exports = UserController;

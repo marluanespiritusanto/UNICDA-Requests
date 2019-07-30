@@ -1,8 +1,10 @@
-let _userRepository = null;
+let _userRepository,
+  _roleRepository = null;
 
 class UserService {
-  constructor({ UserRepository }) {
+  constructor({ UserRepository, RoleRepository }) {
     _userRepository = UserRepository;
+    _roleRepository = RoleRepository;
   }
 
   async getUser(id) {
@@ -32,6 +34,28 @@ class UserService {
 
   async deleteUser(id) {
     return await _userRepository.delete(id);
+  }
+
+  async setRoleToUser(userId, roleId) {
+    const userExists = await this.getUser(userId);
+    if (!userExists) {
+      const error = new Error();
+      error.status = 404;
+      error.message = "User does not exists";
+      throw error;
+    }
+
+    const roleExist = await _roleRepository.get(roleId);
+
+    if (!roleExist) {
+      const error = new Error();
+      error.status = 404;
+      error.message = "Role does not exists";
+      throw error;
+    }
+
+    const roleSetted = await _userRepository.setRoleToUser(userId, roleId);
+    return roleSetted;
   }
 }
 
