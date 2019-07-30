@@ -42,7 +42,7 @@ class AuthService {
     }
 
     const encodeUser = {};
-    encodeUser.role = userExits.roles.map(role => role.name);
+    encodeUser.roles = userExits.roles.map(role => role.name);
     encodeUser.username = userExits.username;
     encodeUser.id = userExits._id;
 
