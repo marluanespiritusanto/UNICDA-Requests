@@ -3,6 +3,8 @@ const cors = require("cors");
 const compression = require("compression");
 require("express-async-errors");
 const { NotFoundMiddleware, ErrorMiddleware } = require("../middlewares");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../config/swagger/swagger.json");
 
 module.exports = function({
   HomeRoutes,
@@ -28,6 +30,7 @@ module.exports = function({
   apiRoute.use("/formType", FormTypeRoutes);
 
   router.use("/api", apiRoute);
+  router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   router.use(NotFoundMiddleware);
   router.use(ErrorMiddleware);
 
