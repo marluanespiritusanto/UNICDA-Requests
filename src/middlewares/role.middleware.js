@@ -3,7 +3,7 @@ module.exports = function(role) {
     const currentUser = req.user;
 
     const isValidRole = currentUser.roles.find(r => {
-      return r.name === role;
+      return r === role;
     });
 
     if (!isValidRole) {
