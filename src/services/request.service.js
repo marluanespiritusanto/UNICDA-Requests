@@ -4,6 +4,7 @@ class RequestService {
   constructor({ RequestRepository }) {
     _requestRepository = RequestRepository;
   }
+
   async getRequest(id) {
     const request = await _requestRepository.get(id);
     return request;
@@ -52,6 +53,14 @@ class RequestService {
   async getRequestForm(requestId) {
     const form = await _requestRepository.getRequestForm(requestId);
     return form;
+  }
+
+  async createRequisition(requisiton) {
+    const createdRequisiton = await _requestRepository.createRequisition(
+      requisiton
+    );
+
+    return createdRequisiton;
   }
 }
 

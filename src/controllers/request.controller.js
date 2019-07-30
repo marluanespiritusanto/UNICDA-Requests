@@ -56,6 +56,15 @@ class RequestController {
     const form = await _requestService.getRequestForm(requestId);
     return res.send(form);
   }
+
+  async createRequisition(req, res) {
+    const { requisition } = req.body;
+    const createdRequisition = await _requestService.createRequisition(
+      requisition
+    );
+
+    return res.status(201).send(createdRequisition);
+  }
 }
 
 module.exports = RequestController;

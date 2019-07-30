@@ -42,7 +42,14 @@ const {
 } = require("../services");
 
 // models
-const { Role, User, Request, RequestForm, FormType } = require("../models");
+const {
+  Role,
+  User,
+  Request,
+  RequestForm,
+  FormType,
+  RequestHistory
+} = require("../models");
 
 const container = createContainer();
 
@@ -91,7 +98,8 @@ container
     User: asValue(User),
     Request: asValue(Request),
     RequestForm: asValue(RequestForm),
-    FormType: asValue(FormType)
+    FormType: asValue(FormType),
+    RequestHistory: asValue(RequestHistory)
   });
 
 module.exports = container;

@@ -10,6 +10,7 @@ module.exports = function({ RequestController }) {
   router.delete("/:id", RequestController.deleteRequest);
   router.post("/:requestId/createForm", RequestController.createRequestForm);
   router.get("/:requestId/getForm", RequestController.getRequestForm);
+  router.post("/createRequisition", RequestController.createRequisition);
 
   return router;
 };

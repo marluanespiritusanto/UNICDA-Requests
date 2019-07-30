@@ -2,13 +2,15 @@ const { StatusHelper } = require("../helpers");
 
 let _request,
   _requestForm,
+  _requestHistory,
   _formType = null;
 
 class RequestRepository {
-  constructor({ Request, RequestForm, FormType }) {
+  constructor({ Request, RequestForm, FormType, RequestHistory }) {
     _request = Request;
     _requestForm = RequestForm;
     _formType = FormType;
+    _requestHistory = RequestHistory;
   }
 
   async get(id) {
@@ -71,6 +73,11 @@ class RequestRepository {
       .populate("formTypeId", "name");
 
     return form;
+  }
+
+  async createRequisition(requisition) {
+    const createdRequisition = await _requestHistory.create([requisition]);
+    return createdRequisition;
   }
 }
 
