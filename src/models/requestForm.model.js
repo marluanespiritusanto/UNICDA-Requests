@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const RequestFormSchema = new Schema(
   {
@@ -8,7 +8,7 @@ const RequestFormSchema = new Schema(
       ref: "FormType",
       required: true
     },
-    requestTypeId: {
+    requestId: {
       type: Schema.Types.ObjectId,
       ref: "RequestType",
       required: true

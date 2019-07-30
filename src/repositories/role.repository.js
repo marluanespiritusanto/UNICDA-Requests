@@ -16,8 +16,14 @@ class RoleRepository {
     return role;
   }
 
-  async getAll() {
-    const roles = await _role.find({ status: StatusHelper.ACTIVE });
+  async getAll(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const roles = await _role
+      .find({ status: StatusHelper.ACTIVE })
+      .skip(skips)
+      .limit(pageSize);
+
     return roles;
   }
 
@@ -35,8 +41,8 @@ class RoleRepository {
   }
 
   async delete(id) {
-    await _role.findByIdAndDelete(id);
-    return true;
+    const deletedRole = await _role.findByIdAndDelete(id);
+    return deletedRole.toJSON();
   }
 }
 

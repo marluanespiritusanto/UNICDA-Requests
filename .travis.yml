@@ -12,3 +12,4 @@ install:
 script:
   - nohup npm start &
   - sleep 3
+  - npm test

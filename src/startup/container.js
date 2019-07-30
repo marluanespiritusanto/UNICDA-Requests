@@ -8,7 +8,9 @@ const {
   HomeRoutes,
   AuthRoutes,
   RoleRoutes,
-  UserRoutes
+  UserRoutes,
+  RequestRoutes,
+  FormTypeRoutes
 } = require("../routes/index.routes");
 
 // controllers
@@ -16,22 +18,38 @@ const {
   HomeController,
   AuthController,
   RoleController,
-  UserController
+  UserController,
+  RequestController,
+  FormTypeController
 } = require("../controllers");
 
 // repositories
-const { UserRepository, RoleRepository } = require("../repositories");
+const {
+  UserRepository,
+  RoleRepository,
+  RequestRepository,
+  FormTypeRepository
+} = require("../repositories");
 
 // services
 const {
   HomeService,
   AuthService,
   RoleService,
-  UserService
+  UserService,
+  RequestService,
+  FormTypeService
 } = require("../services");
 
 // models
-const { Role, User } = require("../models");
+const {
+  Role,
+  User,
+  Request,
+  RequestForm,
+  FormType,
+  RequestHistory
+} = require("../models");
 
 const container = createContainer();
 
@@ -45,27 +63,43 @@ container
     HomeRoutes: asFunction(HomeRoutes).singleton(),
     AuthRoutes: asFunction(AuthRoutes).singleton(),
     UserRoutes: asFunction(UserRoutes).singleton(),
-    RoleRoutes: asFunction(RoleRoutes).singleton()
+    RoleRoutes: asFunction(RoleRoutes).singleton(),
+    RequestRoutes: asFunction(RequestRoutes).singleton(),
+    FormTypeRoutes: asFunction(FormTypeRoutes).singleton()
   })
   .register({
     HomeService: asClass(HomeService).singleton(),
     AuthService: asClass(AuthService).singleton(),
     UserService: asClass(UserService).singleton(),
-    RoleService: asClass(RoleService).singleton()
+    RoleService: asClass(RoleService).singleton(),
+    RequestService: asClass(RequestService).singleton(),
+    FormTypeService: asClass(FormTypeService).singleton()
   })
   .register({
     HomeController: asClass(HomeController.bind(HomeController)).singleton(),
     AuthController: asClass(AuthController.bind(AuthController)).singleton(),
     UserController: asClass(UserController.bind(UserController)).singleton(),
-    RoleController: asClass(RoleController.bind(RoleController)).singleton()
+    RoleController: asClass(RoleController.bind(RoleController)).singleton(),
+    RequestController: asClass(
+      RequestController.bind(RequestController)
+    ).singleton(),
+    FormTypeController: asClass(
+      FormTypeController.bind(FormTypeController)
+    ).singleton()
   })
   .register({
     UserRepository: asClass(UserRepository).singleton(),
-    RoleRepository: asClass(RoleRepository).singleton()
+    RoleRepository: asClass(RoleRepository).singleton(),
+    RequestRepository: asClass(RequestRepository).singleton(),
+    FormTypeRepository: asClass(FormTypeRepository).singleton()
   })
   .register({
     Role: asValue(Role),
-    User: asValue(User)
+    User: asValue(User),
+    Request: asValue(Request),
+    RequestForm: asValue(RequestForm),
+    FormType: asValue(FormType),
+    RequestHistory: asValue(RequestHistory)
   });
 
 module.exports = container;

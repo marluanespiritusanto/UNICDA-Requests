@@ -14,8 +14,8 @@ class RoleService {
     return role;
   }
 
-  async getAllRoles() {
-    const roles = await _roleRepository.getAll();
+  async getAllRoles(pageSize, pageNum) {
+    const roles = await _roleRepository.getAll(pageSize, pageNum);
     return roles;
   }
 

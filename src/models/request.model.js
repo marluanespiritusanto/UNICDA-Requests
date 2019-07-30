@@ -1,14 +1,12 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
+const { StatusHelper } = require("../helpers");
 
 const RequestSchema = new Schema(
   {
-    requestTypeId: {
-      type: Schema.Types.ObjectId,
-      ref: "RequestType",
-      required: true
-    },
-    status: { type: String }
+    name: { type: String },
+    description: { type: String },
+    status: { type: String, default: StatusHelper.ACTIVE }
   },
   { timestamps: { createdAt: true, updatedAt: true } }
 );

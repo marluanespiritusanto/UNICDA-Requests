@@ -27,11 +27,15 @@ class UserRepository {
     return user;
   }
 
-  async getAll() {
+  async getAll(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
     const users = await _user
       .find({ status: StatusHelper.ACTIVE })
       .populate("roles", "name")
-      .populate("details");
+      .populate("details")
+      .skip(skips)
+      .limit(pageSize);
 
     return users;
   }
@@ -53,8 +57,8 @@ class UserRepository {
   }
 
   async delete(id) {
-    const deletedUser = await _user.findByIdAndRemove(id);
-    return deletedUser;
+    const deletedUser = await _user.findByIdAndDelete(id);
+    return deletedUser.toJSON();
   }
 }
 
