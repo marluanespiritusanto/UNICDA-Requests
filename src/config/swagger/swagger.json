@@ -44,7 +44,7 @@
       "description": "Everything about role"
     }
   ],
-  "schemes": ["http", "https"],
+  "schemes": ["https", "http"],
   "paths": {
     "/auth/signIn": {
       "post": {
