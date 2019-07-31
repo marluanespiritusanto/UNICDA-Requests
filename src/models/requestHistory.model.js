@@ -4,22 +4,18 @@ const { StatusHelper } = require("../helpers");
 
 const RequestHistorychema = new Schema(
   {
-    reviewerId: {
+    reviewer: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true
     },
-    userId: {
+    completed: { type: Boolean, required: false },
+    requestRecord: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "RequestRecord",
       required: true
     },
-    requestId: {
-      type: Schema.Types.ObjectId,
-      ref: "Request",
-      required: true
-    },
-    status: { type: String }
+    status: { type: String, default: StatusHelper.INACTIVE }
   },
   { timestamps: { createdAt: true, updatedAt: true } }
 );

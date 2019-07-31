@@ -22,11 +22,7 @@ module.exports = function({ UserController }) {
     [AuthMiddleware, RoleMiddleware(RoleHelper.ADMIN)],
     UserController.deleteUser
   );
-  router.post(
-    "/setRole/:id",
-    [AuthMiddleware, RoleMiddleware(RoleHelper.ADMIN)],
-    UserController.setRoleToUser
-  );
+  router.post("/setRole/:id", [AuthMiddleware], UserController.setRoleToUser);
 
   return router;
 };

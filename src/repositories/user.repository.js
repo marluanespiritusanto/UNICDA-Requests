@@ -18,6 +18,15 @@ class UserRepository {
     return user;
   }
 
+  async getUserByRole(roleId) {
+    const user = await _user.findOne({
+      roles: { $in: [roleId] },
+      status: StatusHelper.ACTIVE
+    });
+
+    return user;
+  }
+
   async getUserByUsername(username) {
     const user = await _user
       .findOne({ username })

@@ -6,5 +6,6 @@ module.exports = {
   FormType: require("./formTypes.model"),
   RequestHistory: require("./requestHistory.model"),
   Step: require("./step.model"),
-  RequestStep: require("./requestStep.model")
+  RequestStep: require("./requestStep.model"),
+  RequestRecord: require("./requestRecord.model")
 };

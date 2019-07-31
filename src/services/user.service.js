@@ -12,6 +12,11 @@ class UserService {
     return user;
   }
 
+  async getUserByRole(roleId) {
+    const user = await _userRepository.getUserByRole(roleId);
+    return user;
+  }
+
   async getUserByUsername(username) {
     const user = await _userRepository.getUserByUsername(username);
     return user;

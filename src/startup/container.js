@@ -54,7 +54,8 @@ const {
   FormType,
   RequestHistory,
   Step,
-  RequestStep
+  RequestStep,
+  RequestRecord
 } = require("../models");
 
 const container = createContainer();
@@ -111,7 +112,8 @@ container
     FormType: asValue(FormType),
     RequestHistory: asValue(RequestHistory),
     Step: asValue(Step),
-    RequestStep: asValue(RequestStep)
+    RequestStep: asValue(RequestStep),
+    RequestRecord: asValue(RequestRecord)
   });
 
 module.exports = container;

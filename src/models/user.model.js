@@ -37,7 +37,7 @@ UserSchema.pre("save", async function(next) {
   const hashedPassword = hashSync(user.password, salt);
   user.password = hashedPassword;
 
-  const generalRole = await Role.findOne({ name: RoleHelper.GENERAL });
+  const generalRole = await Role.findOne({ name: RoleHelper.STUDENT });
   user.roles.push(generalRole);
 
   next();
