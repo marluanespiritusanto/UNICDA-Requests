@@ -3,14 +3,25 @@ const { StatusHelper } = require("../helpers");
 let _request,
   _requestForm,
   _requestHistory,
-  _formType = null;
+  _formType,
+  _requestStep,
+  _requestRecord = null;
 
 class RequestRepository {
-  constructor({ Request, RequestForm, FormType, RequestHistory }) {
+  constructor({
+    Request,
+    RequestForm,
+    FormType,
+    RequestHistory,
+    RequestRecord,
+    RequestStep
+  }) {
     _request = Request;
     _requestForm = RequestForm;
     _formType = FormType;
     _requestHistory = RequestHistory;
+    _requestRecord = RequestRecord;
+    _requestStep = RequestStep;
   }
 
   async get(id) {
@@ -78,6 +89,35 @@ class RequestRepository {
   async createRequisition(requisition) {
     const createdRequisition = await _requestHistory.create([requisition]);
     return createdRequisition;
+  }
+
+  async updateRequestForm(formId, value) {
+    await _requestForm.findByIdAndUpdate(formId, { value });
+  }
+
+  async createRequestRecord(requestRecord) {
+    const createdRequestRecord = await _requestRecord.create([requestRecord]);
+    return createdRequestRecord[0];
+  }
+
+  async getRequestSteps(requestId) {
+    const steps = await _requestStep
+      .find({ request: requestId })
+      .populate({
+        path: "step",
+        populate: {
+          path: "roleOfficer",
+          model: "Role"
+        }
+      })
+      .sort("order");
+
+    return steps;
+  }
+
+  async createRequestHistory(requestHistory) {
+    const createdRequestHistory = _requestHistory.create(requestHistory);
+    return createdRequestHistory;
   }
 }
 

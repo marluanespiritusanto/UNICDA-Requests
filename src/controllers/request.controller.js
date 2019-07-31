@@ -37,7 +37,16 @@ class RequestController {
   async deleteRequest(req, res) {
     const { id } = req.params;
     const deletedUser = await _requestService.deleteRequest(id);
+
     return res.send(deletedUser);
+  }
+
+  async setStepToRequest(req, res) {
+    const { id } = req.params;
+    const { stepId } = req.body;
+    const step = await _requestService.setStepToRequest(id, stepId);
+
+    return res.send(step);
   }
 
   async createRequestForm(req, res) {
@@ -58,9 +67,13 @@ class RequestController {
   }
 
   async createRequisition(req, res) {
-    const { requisition } = req.body;
+    const { body: forms } = req;
+    const { id: userId } = req.user;
+    const { requestId } = req.params;
     const createdRequisition = await _requestService.createRequisition(
-      requisition
+      userId,
+      requestId,
+      forms
     );
 
     return res.status(201).send(createdRequisition);

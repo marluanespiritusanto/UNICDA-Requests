@@ -1,8 +1,10 @@
-let _requestRepository = null;
+let _requestRepository,
+  _userRepository = null;
 
 class RequestService {
-  constructor({ RequestRepository }) {
+  constructor({ RequestRepository, UserRepository }) {
     _requestRepository = RequestRepository;
+    _userRepository = UserRepository;
   }
 
   async getRequest(id) {
@@ -34,6 +36,13 @@ class RequestService {
     return await _requestRepository.delete(id);
   }
 
+  async setStepToRequest(id, stepId) {
+    const stepRequest = {
+      request: id,
+      step: stepId
+    };
+  }
+
   async createRequestForm(requestId, form) {
     const requestForm = form.map(({ formTypeId, label }) => {
       return {
@@ -55,12 +64,54 @@ class RequestService {
     return form;
   }
 
-  async createRequisition(requisiton) {
-    const createdRequisiton = await _requestRepository.createRequisition(
-      requisiton
-    );
+  async createRequisition(userId, requestId, forms) {
+    await this.saveRequestForm(forms);
+    const requestRecord = await this.createRequestRecord(requestId, userId);
+    const requestSteps = await this.getRequestSteps(requestId);
+    await this.createRequestHistory(requestSteps, requestRecord);
 
-    return createdRequisiton;
+    return requestRecord;
+  }
+
+  async saveRequestForm(forms) {
+    for (const form of forms) {
+      await _requestRepository.updateRequestForm(form.formId, form.value);
+    }
+  }
+
+  async getRequestSteps(requestId) {
+    const requestSteps = await _requestRepository.getRequestSteps(requestId);
+    return requestSteps;
+  }
+
+  async createRequestRecord(request, user) {
+    const requestRecord = await _requestRepository.createRequestRecord({
+      request,
+      user
+    });
+
+    return requestRecord;
+  }
+
+  async createRequestHistory(steps, requestRecord) {
+    const requestHistory = [];
+    for (const step of steps) {
+      const reviewer = await this.getAvailableReviewer(step);
+      requestHistory.push({
+        reviewer,
+        requestRecord
+      });
+    }
+
+    await _requestRepository.createRequestHistory(requestHistory);
+  }
+
+  async getAvailableReviewer(step) {
+    const {
+      step: { roleOfficer }
+    } = step;
+    const reviewer = await _userRepository.getUserByRole(roleOfficer.id);
+    return reviewer;
   }
 }
 

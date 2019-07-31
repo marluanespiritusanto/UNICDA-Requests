@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { AuthMiddleware } = require("../middlewares");
 
 module.exports = function({ RequestController }) {
   const router = Router();
@@ -10,7 +11,11 @@ module.exports = function({ RequestController }) {
   router.delete("/:id", RequestController.deleteRequest);
   router.post("/:requestId/createForm", RequestController.createRequestForm);
   router.get("/:requestId/getForm", RequestController.getRequestForm);
-  router.post("/createRequisition", RequestController.createRequisition);
+  router.post(
+    "/create/:requestId",
+    AuthMiddleware,
+    RequestController.createRequisition
+  );
 
   return router;
 };
