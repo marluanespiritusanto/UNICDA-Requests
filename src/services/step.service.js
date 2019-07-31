@@ -32,6 +32,18 @@ class StepService {
   async deleteStep(id) {
     return await _stepRepository.delete(id);
   }
+
+  async setStepToRequest(requestId, steps) {
+    steps = steps.map(({ stepId: step, order }) => ({
+      step,
+      order,
+      request: requestId
+    }));
+
+    const createdRequestSteps = await _stepRepository.setStepToRequest(steps);
+
+    return createdRequestSteps;
+  }
 }
 
 module.exports = StepService;

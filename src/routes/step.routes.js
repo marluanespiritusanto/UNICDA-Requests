@@ -21,6 +21,11 @@ module.exports = function({ StepController }) {
     [AuthMiddleware, RoleMiddleware("ADMIN")],
     StepController.deleteStep
   );
+  router.post(
+    "/setSteps/:id",
+    [AuthMiddleware, RoleMiddleware("ADMIN")],
+    StepController.setStepToRequest
+  );
 
   return router;
 };

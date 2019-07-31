@@ -39,6 +39,17 @@ class StepController {
     const deletedUser = await _stepService.deleteStep(id);
     return res.send(deletedUser);
   }
+
+  async setStepToRequest(req, res) {
+    const { id: requestId } = req.params;
+    const { body: steps } = req;
+    const createdRequestSteps = await _stepService.setStepToRequest(
+      requestId,
+      steps
+    );
+
+    return res.send(createdRequestSteps);
+  }
 }
 
 module.exports = StepController;

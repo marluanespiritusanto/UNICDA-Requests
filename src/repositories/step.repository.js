@@ -1,10 +1,12 @@
 const { StatusHelper } = require("../helpers");
 
-let _step = null;
+let _step,
+  _requestStep = null;
 
 class StepRepository {
-  constructor({ Step }) {
+  constructor({ Step, RequestStep }) {
     _step = Step;
+    _requestStep = RequestStep;
   }
   async get(id) {
     const step = await _step.findOne({ _id: id, status: StatusHelper.ACTIVE });
@@ -43,6 +45,10 @@ class StepRepository {
   async delete(id) {
     const deletedStep = await _step.findByIdAndDelete(id);
     return deletedStep.toJSON();
+  }
+
+  async setStepToRequest(steps) {
+    return await _requestStep.create(steps);
   }
 }
 
