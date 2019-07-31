@@ -16,31 +16,31 @@
   "basePath": "/api",
   "tags": [
     {
-      "name": "authentication",
+      "name": "Authentication",
       "description": "Everything about authentication"
     },
     {
-      "name": "user",
+      "name": "User",
       "description": "Everything about users"
     },
     {
-      "name": "request",
+      "name": "Request",
       "description": "Everything about requests"
     },
     {
-      "name": "requestForm",
+      "name": "RequestForm",
       "description": "Everything about requestForm"
     },
     {
-      "name": "formType",
+      "name": "FormType",
       "description": "Everything about formType"
     },
     {
-      "name": "requestHistory",
+      "name": "RequestHistory",
       "description": "Everything about requestHistory"
     },
     {
-      "name": "role",
+      "name": "Role",
       "description": "Everything about role"
     }
   ],
@@ -48,7 +48,7 @@
   "paths": {
     "/auth/signIn": {
       "post": {
-        "tags": ["authentication"],
+        "tags": ["Authentication"],
         "summary": "Login",
         "description": "",
         "operationId": "signIn",
@@ -74,7 +74,7 @@
     },
     "/auth/signUp": {
       "post": {
-        "tags": ["authentication"],
+        "tags": ["Authentication"],
         "summary": "Register as generic user",
         "description": "",
         "operationId": "signUp",
@@ -100,7 +100,7 @@
     },
     "/user": {
       "get": {
-        "tags": ["user"],
+        "tags": ["User"],
         "summary": "Finds All the Users",
         "description": "",
         "produces": ["application/json"],
@@ -134,7 +134,7 @@
         }
       },
       "post": {
-        "tags": ["user"],
+        "tags": ["User"],
         "summary": "Register as generic user",
         "description": "",
         "operationId": "Create User",
@@ -160,7 +160,7 @@
     },
     "/user/{id}": {
       "get": {
-        "tags": ["user"],
+        "tags": ["User"],
         "summary": "Find one user",
         "description": "",
         "produces": ["application/json"],
@@ -189,8 +189,8 @@
         }
       },
       "patch": {
-        "tags": ["user"],
-        "summary": "Find one user",
+        "tags": ["User"],
+        "summary": "Update one user",
         "description": "",
         "produces": ["application/json"],
         "parameters": [
@@ -218,8 +218,8 @@
         }
       },
       "delete": {
-        "tags": ["user"],
-        "summary": "Find one user",
+        "tags": ["User"],
+        "summary": "Delete one user",
         "description": "",
         "produces": ["application/json"],
         "parameters": [
@@ -246,22 +246,155 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
+    },
+    "/request": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Finds All the Requests",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Request"],
+        "summary": "Create a new request",
+        "description": "",
+        "operationId": "Create Request",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create Request",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Request"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid input"
+          }
+        }
       }
     },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
+    "/request/{id}": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find one request",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Request"],
+        "summary": "Update one request",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Request"],
+        "summary": "Delete one request",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid tag value"
+          }
+        }
+      }
     }
   },
   "definitions": {
