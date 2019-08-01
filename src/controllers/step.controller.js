@@ -41,7 +41,7 @@ class StepController {
   }
 
   async setStepToRequest(req, res) {
-    const { id: requestId } = req.params;
+    const { requestId } = req.params;
     const { body: steps } = req;
     const createdRequestSteps = await _stepService.setStepToRequest(
       requestId,
