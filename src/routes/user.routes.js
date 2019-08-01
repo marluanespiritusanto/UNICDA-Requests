@@ -1,11 +1,19 @@
 const { Router } = require("express");
-const { AuthMiddleware, RoleMiddleware } = require("../middlewares");
-const { RoleHelper } = require("../helpers");
+const {
+  AuthMiddleware,
+  RoleMiddleware,
+  CacheMiddleware
+} = require("../middlewares");
+const { RoleHelper, CacheTimeHelper } = require("../helpers");
 
 module.exports = function({ UserController }) {
   const router = Router();
 
-  router.get("", UserController.getAllUsers);
+  router.get(
+    "",
+    CacheMiddleware(CacheTimeHelper.ONE_HOUR),
+    UserController.getAllUsers
+  );
   router.get("/:id", UserController.getUser);
   router.post(
     "",

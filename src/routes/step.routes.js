@@ -1,10 +1,20 @@
 const { Router } = require("express");
-const { AuthMiddleware, RoleMiddleware } = require("../middlewares");
+const {
+  AuthMiddleware,
+  RoleMiddleware,
+  CacheMiddleware
+} = require("../middlewares");
+
+const { CacheTimeHelper } = require("../helpers");
 
 module.exports = function({ StepController }) {
   const router = Router();
 
-  router.get("", StepController.getAllSteps);
+  router.get(
+    "",
+    CacheMiddleware(CacheTimeHelper.ONE_HOUR),
+    StepController.getAllSteps
+  );
   router.get("/:id", StepController.getStep);
   router.post(
     "",
