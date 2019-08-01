@@ -28,20 +28,16 @@
       "description": "Everything about requests"
     },
     {
-      "name": "RequestForm",
-      "description": "Everything about requestForm"
-    },
-    {
       "name": "FormType",
       "description": "Everything about formType"
     },
     {
-      "name": "RequestHistory",
-      "description": "Everything about requestHistory"
-    },
-    {
       "name": "Role",
       "description": "Everything about role"
+    },
+    {
+      "name": "Step",
+      "description": "Everything about step"
     }
   ],
   "schemes": ["https", "http"],
@@ -149,11 +145,21 @@
             "schema": {
               "$ref": "#/definitions/User"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
-          "400": {
-            "description": "Invalid input"
+          "201": {
+            "description": "User Created"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -200,6 +206,13 @@
             "type": "string",
             "description": "User Id",
             "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -229,6 +242,13 @@
             "type": "string",
             "description": "User Id",
             "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -243,6 +263,50 @@
           },
           "400": {
             "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/user/setRole/{userId}": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Set role to user",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "type": "string",
+            "description": "User Id",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "roleId",
+            "description": "Role Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid roleId or userId value"
           }
         }
       }
@@ -298,6 +362,13 @@
             "schema": {
               "$ref": "#/definitions/Request"
             }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -349,6 +420,13 @@
             "type": "string",
             "description": "Request Id",
             "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -378,6 +456,13 @@
             "type": "string",
             "description": "Request Id",
             "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -392,6 +477,634 @@
           },
           "400": {
             "description": "Invalid tag value"
+          }
+        }
+      }
+    },
+    "/request/{requestId}/getForm": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find request forms",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid RequestId value"
+          }
+        }
+      }
+    },
+    "/request/create/{requestId}": {
+      "post": {
+        "tags": ["Request"],
+        "summary": "Create request requisition",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid RequestId value"
+          }
+        }
+      }
+    },
+    "/formType": {
+      "get": {
+        "tags": ["FormType"],
+        "summary": "Finds All the Users",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      },
+      "post": {
+        "tags": ["FormType"],
+        "summary": "Create a new FormType",
+        "description": "",
+        "operationId": "Create FormType",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create formType",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FormType"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User Created"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/formType/{id}": {
+      "get": {
+        "tags": ["FormType"],
+        "summary": "Find one formType",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "FormType Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FormType"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid FormType value"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["FormType"],
+        "summary": "Update one formType",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "FormType Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FormType"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid FormType value"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["FormType"],
+        "summary": "Delete one formType",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "FormType Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FormType"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid FormType value"
+          }
+        }
+      }
+    },
+    "/role": {
+      "get": {
+        "tags": ["Role"],
+        "summary": "Finds all roles",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid role value"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Role"],
+        "summary": "Create a new Role",
+        "description": "",
+        "operationId": "Create Role",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create role",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Role"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Role Created"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/role/{id}": {
+      "get": {
+        "tags": ["Role"],
+        "summary": "Find one role",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Role Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Role value"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Role"],
+        "summary": "Update one role",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Role Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Role value"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Role"],
+        "summary": "Delete one role",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Role Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Role"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Role value"
+          }
+        }
+      }
+    },
+    "/step": {
+      "get": {
+        "tags": ["Step"],
+        "summary": "Finds all steps",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Step"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Step"],
+        "summary": "Create a new Step",
+        "description": "",
+        "operationId": "Create Step",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create step",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Step"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Step Created"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/step/{id}": {
+      "get": {
+        "tags": ["Step"],
+        "summary": "Find one step",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Step Id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Step"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Step value"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Step"],
+        "summary": "Update one step",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Step Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Step"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Step value"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Step"],
+        "summary": "Delete one step",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "Step Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Authorization token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Step"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Step value"
+          }
+        }
+      }
+    },
+    "/setSteps/{requestId}": {
+      "post": {
+        "tags": ["Step"],
+        "summary": "Set Steps to Request",
+        "description": "",
+        "operationId": "Set Steps to Request",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Step Id"
+              }
+            },
+            "name": "steps",
+            "description": "Create step",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token with admin role",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Step setted"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -436,7 +1149,7 @@
           "type": "string",
           "format": "string"
         },
-        "passwotd": {
+        "password": {
           "type": "string",
           "format": "string"
         }
@@ -581,6 +1294,41 @@
           "format": "string"
         },
         "description": {
+          "type": "string",
+          "format": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "string",
+          "description": "Request Status",
+          "enum": ["ACTIVE", "INACTIVE"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Step": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "format": "string"
+        },
+        "name": {
+          "type": "string",
+          "format": "string"
+        },
+        "description": {
+          "type": "string",
+          "format": "string"
+        },
+        "roleOfficer": {
           "type": "string",
           "format": "string"
         },
