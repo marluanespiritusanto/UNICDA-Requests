@@ -1,3 +1,5 @@
+const { StatusHelper } = require("../helpers");
+
 let _requestRepository,
   _userRepository = null;
 
@@ -94,16 +96,30 @@ class RequestService {
   }
 
   async createRequestHistory(steps, requestRecord) {
-    const requestHistory = [];
+    const FIRST_ORDER = 1;
+    const requestHistories = [];
+
     for (const step of steps) {
       const reviewer = await this.getAvailableReviewer(step);
-      requestHistory.push({
+      const requestHistory = {
         reviewer,
-        requestRecord
-      });
+        requestRecord,
+        requestStep: step._id
+      };
+
+      if (step.order === FIRST_ORDER) {
+        requestHistory.status = StatusHelper.APPROVE_PENDING;
+      }
+
+      requestHistories.push(requestHistory);
     }
 
-    await _requestRepository.createRequestHistory(requestHistory);
+    await _requestRepository.createRequestHistory(requestHistories);
+  }
+
+  async getRequestHistory(recordId) {
+    const status = await _requestRepository.getRequestStatus(recordId);
+    return status;
   }
 
   async getAvailableReviewer(step) {
