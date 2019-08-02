@@ -4,6 +4,11 @@ const { StatusHelper } = require("../helpers");
 
 const RequestHistorychema = new Schema(
   {
+    requestStep: {
+      type: Schema.Types.ObjectId,
+      ref: "RequestStep",
+      required: true
+    },
     reviewer: {
       type: Schema.Types.ObjectId,
       ref: "User",
