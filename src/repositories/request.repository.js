@@ -119,6 +119,37 @@ class RequestRepository {
     const createdRequestHistory = _requestHistory.create(requestHistory);
     return createdRequestHistory;
   }
+
+  async getRequestHistory(recordId) {
+    const requestHistory = await _requestHistory.find({
+      requestRecord: recordId
+    });
+
+    return requestHistory;
+  }
+
+  async getRequestStatus(recordId) {
+    const history = await _requestHistory
+      .findOne({
+        status: StatusHelper.APPROVE_PENDING,
+        requestRecord: recordId
+      })
+      .populate({
+        path: "requestStep",
+        populate: {
+          path: "step",
+          model: "Step"
+        }
+      });
+
+    const {
+      requestStep: { step }
+    } = history;
+
+    return {
+      status: step.name
+    };
+  }
 }
 
 module.exports = RequestRepository;
