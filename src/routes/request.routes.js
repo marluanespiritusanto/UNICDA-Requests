@@ -11,6 +11,11 @@ module.exports = function({ RequestController }) {
 
   router.get("/created", AuthMiddleware, RequestController.getCreatedRequests);
   router.get(
+    "/me/created",
+    AuthMiddleware,
+    RequestController.getCreatedRequestsByUser
+  );
+  router.get(
     "/:requestRecordId/history",
     AuthMiddleware,
     RequestController.getRequestHistory

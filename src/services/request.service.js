@@ -141,6 +141,16 @@ class RequestService {
 
     return requests;
   }
+
+  async getCreatedRequestsByUser(userId, pageSize, pageNum) {
+    const requests = await _requestRepository.getCreatedRequestsByUser(
+      userId,
+      pageSize,
+      pageNum
+    );
+
+    return requests;
+  }
 }
 
 module.exports = RequestService;

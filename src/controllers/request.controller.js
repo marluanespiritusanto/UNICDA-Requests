@@ -97,6 +97,21 @@ class RequestController {
 
     return res.send(requests);
   }
+
+  async getCreatedRequestsByUser(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const {
+      user: { id: userId }
+    } = req;
+
+    const requests = await _requestService.getCreatedRequestsByUser(
+      userId,
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
+
+    return res.send(requests);
+  }
 }
 
 module.exports = RequestController;

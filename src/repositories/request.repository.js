@@ -139,6 +139,17 @@ class RequestRepository {
     return requests;
   }
 
+  async getCreatedRequestsByUser(userId, pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requests = await _requestRecord
+      .find({ user: userId })
+      .skip(skips)
+      .limit(pageSize);
+
+    return requests;
+  }
+
   async getRequestStatus(recordId) {
     const history = await _requestHistory
       .findOne({
