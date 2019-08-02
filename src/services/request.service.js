@@ -117,9 +117,13 @@ class RequestService {
     await _requestRepository.createRequestHistory(requestHistories);
   }
 
-  async getRequestHistory(recordId) {
-    const status = await _requestRepository.getRequestStatus(recordId);
-    return status;
+  async getRequestHistory(pageSize, pageNum) {
+    const requestHistory = await _requestRepository.getReqgetRequestHistoryuestStatus(
+      pageSize,
+      pageNum
+    );
+
+    return requestHistory;
   }
 
   async getAvailableReviewer(step) {

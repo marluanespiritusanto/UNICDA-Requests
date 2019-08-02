@@ -120,10 +120,13 @@ class RequestRepository {
     return createdRequestHistory;
   }
 
-  async getRequestHistory(recordId) {
-    const requestHistory = await _requestHistory.find({
-      requestRecord: recordId
-    });
+  async getRequestHistory(pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requestHistory = await _requestHistory
+      .find()
+      .skip(skips)
+      .limit(pageSize);
 
     return requestHistory;
   }

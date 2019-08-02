@@ -41,6 +41,7 @@ module.exports = function({ RequestController }) {
     AuthMiddleware,
     RequestController.createRequisition
   );
+  router.get("/history", AuthMiddleware, RequestController.getRequestHistory);
 
   return router;
 };

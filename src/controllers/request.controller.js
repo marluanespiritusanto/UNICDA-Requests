@@ -78,6 +78,16 @@ class RequestController {
 
     return res.status(201).send(createdRequisition);
   }
+
+  async getRequestHistory(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const requestHistory = await _requestService.getRequestHistory(
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
+
+    return res.send(requestHistory);
+  }
 }
 
 module.exports = RequestController;
