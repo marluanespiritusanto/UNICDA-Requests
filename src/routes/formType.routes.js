@@ -13,7 +13,7 @@ module.exports = function({ FormTypeController }) {
 
   router.get(
     "",
-    [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddlewares],
+    [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddleware],
     FormTypeController.getAllFormTypes
   );
   router.get("/:id", FormTypeController.getFormType);
