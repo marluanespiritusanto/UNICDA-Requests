@@ -14,10 +14,7 @@ class RequestController {
   async getAllRequests(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const requests = await _requestService.getAllRequests(
-      parseInt(pageSize),
-      parseInt(pageNum)
-    );
+    const requests = await _requestService.getAllRequests(pageSize, pageNum);
     return res.send(requests);
   }
 
@@ -91,8 +88,8 @@ class RequestController {
   async getCreatedRequests(req, res) {
     const { pageSize, pageNum } = req.query;
     const requests = await _requestService.getCreatedRequests(
-      parseInt(pageSize),
-      parseInt(pageNum)
+      pageSize,
+      pageNum
     );
 
     return res.send(requests);
@@ -106,8 +103,8 @@ class RequestController {
 
     const requests = await _requestService.getCreatedRequestsByUser(
       userId,
-      parseInt(pageSize),
-      parseInt(pageNum)
+      pageSize,
+      pageNum
     );
 
     return res.send(requests);
@@ -121,8 +118,8 @@ class RequestController {
 
     const requests = await _requestService.getPendingRequests(
       userId,
-      parseInt(pageSize),
-      parseInt(pageNum)
+      pageSize,
+      pageNum
     );
 
     return res.send(requests);

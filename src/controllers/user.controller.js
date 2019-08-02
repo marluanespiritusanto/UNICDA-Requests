@@ -14,10 +14,7 @@ class UserController {
   async getAllUsers(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const roles = await _userService.getAllUsers(
-      parseInt(pageSize),
-      parseInt(pageNum)
-    );
+    const roles = await _userService.getAllUsers(pageSize, pageNum);
     return res.send(roles);
   }
 

@@ -13,10 +13,7 @@ class RoleController {
   async getAllRoles(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const roles = await _roleService.getAllRoles(
-      parseInt(pageSize),
-      parseInt(pageNum)
-    );
+    const roles = await _roleService.getAllRoles(pageSize, pageNum);
     return res.send(roles);
   }
 
