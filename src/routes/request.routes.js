@@ -2,7 +2,8 @@ const { Router } = require("express");
 const {
   AuthMiddleware,
   RoleMiddleware,
-  CacheMiddleware
+  CacheMiddleware,
+  ParseIntMiddleware
 } = require("../middlewares");
 const { RoleHelper, CacheTimeHelper } = require("../helpers");
 
@@ -11,13 +12,17 @@ module.exports = function({ RequestController }) {
 
   router.get(
     "/me/pending",
-    AuthMiddleware,
+    [AuthMiddleware, ParseIntMiddleware],
     RequestController.getPendingRequests
   );
-  router.get("/created", AuthMiddleware, RequestController.getCreatedRequests);
+  router.get(
+    "/created",
+    [AuthMiddleware, ParseIntMiddleware],
+    RequestController.getCreatedRequests
+  );
   router.get(
     "/me/created",
-    AuthMiddleware,
+    [AuthMiddleware, ParseIntMiddleware],
     RequestController.getCreatedRequestsByUser
   );
   router.get(
@@ -27,7 +32,7 @@ module.exports = function({ RequestController }) {
   );
   router.get(
     "",
-    CacheMiddleware(CacheTimeHelper.ONE_HOUR),
+    [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddleware],
     RequestController.getAllRequests
   );
   router.get("/:id", RequestController.getRequest);

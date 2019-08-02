@@ -3,7 +3,8 @@ const { Router } = require("express");
 const {
   AuthMiddleware,
   RoleMiddleware,
-  CacheMiddleware
+  CacheMiddleware,
+  ParseIntMiddleware
 } = require("../middlewares");
 const { RoleHelper, CacheTimeHelper } = require("../helpers");
 
@@ -12,7 +13,7 @@ module.exports = function({ FormTypeController }) {
 
   router.get(
     "",
-    CacheMiddleware(CacheTimeHelper.ONE_HOUR),
+    [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddlewares],
     FormTypeController.getAllFormTypes
   );
   router.get("/:id", FormTypeController.getFormType);
