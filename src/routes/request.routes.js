@@ -9,6 +9,12 @@ const { RoleHelper, CacheTimeHelper } = require("../helpers");
 module.exports = function({ RequestController }) {
   const router = Router();
 
+  router.get("/created", AuthMiddleware, RequestController.getCreatedRequests);
+  router.get(
+    "/:requestRecordId/history",
+    AuthMiddleware,
+    RequestController.getRequestHistory
+  );
   router.get(
     "",
     CacheMiddleware(CacheTimeHelper.ONE_HOUR),
@@ -41,7 +47,6 @@ module.exports = function({ RequestController }) {
     AuthMiddleware,
     RequestController.createRequisition
   );
-  router.get("/history", AuthMiddleware, RequestController.getRequestHistory);
 
   return router;
 };

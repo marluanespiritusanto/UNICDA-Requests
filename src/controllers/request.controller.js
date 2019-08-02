@@ -80,13 +80,22 @@ class RequestController {
   }
 
   async getRequestHistory(req, res) {
-    const { pageSize, pageNum } = req.query;
+    const { requestRecordId } = req.params;
     const requestHistory = await _requestService.getRequestHistory(
+      requestRecordId
+    );
+
+    return res.send(requestHistory);
+  }
+
+  async getCreatedRequests(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const requests = await _requestService.getCreatedRequests(
       parseInt(pageSize),
       parseInt(pageNum)
     );
 
-    return res.send(requestHistory);
+    return res.send(requests);
   }
 }
 
