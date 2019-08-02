@@ -12,7 +12,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:3500",
+  "host": "unicdarequests.herokuapp.com",
   "basePath": "/api",
   "tags": [
     {
