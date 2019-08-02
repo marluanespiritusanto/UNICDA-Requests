@@ -172,6 +172,20 @@ class RequestRepository {
       status: step.name
     };
   }
+
+  async getPendingRequests(reviewerId, pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requests = await _requestHistory
+      .find({
+        reviewer: reviewerId,
+        status: StatusHelper.APPROVE_PENDING
+      })
+      .skip(skips)
+      .limit(pageSize);
+
+    return requests;
+  }
 }
 
 module.exports = RequestRepository;

@@ -9,6 +9,11 @@ const { RoleHelper, CacheTimeHelper } = require("../helpers");
 module.exports = function({ RequestController }) {
   const router = Router();
 
+  router.get(
+    "/me/pending",
+    AuthMiddleware,
+    RequestController.getPendingRequests
+  );
   router.get("/created", AuthMiddleware, RequestController.getCreatedRequests);
   router.get(
     "/me/created",

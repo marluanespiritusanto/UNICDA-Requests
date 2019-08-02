@@ -151,6 +151,16 @@ class RequestService {
 
     return requests;
   }
+
+  async getPendingRequests(reviewerId, pageSize, pageNum) {
+    const requests = await _requestRepository.getPendingRequests(
+      reviewerId,
+      pageSize,
+      pageNum
+    );
+
+    return requests;
+  }
 }
 
 module.exports = RequestService;

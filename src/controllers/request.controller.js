@@ -112,6 +112,21 @@ class RequestController {
 
     return res.send(requests);
   }
+
+  async getPendingRequests(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const {
+      user: { id: userId }
+    } = req;
+
+    const requests = await _requestService.getPendingRequests(
+      userId,
+      parseInt(pageSize),
+      parseInt(pageNum)
+    );
+
+    return res.send(requests);
+  }
 }
 
 module.exports = RequestController;
