@@ -48,7 +48,7 @@ class AuthService {
 
     const token = JwtHelper.generateToken(encodeUser);
 
-    return token;
+    return { token, user: userExits };
   }
 }
 
