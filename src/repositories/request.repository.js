@@ -120,15 +120,34 @@ class RequestRepository {
     return createdRequestHistory;
   }
 
-  async getRequestHistory(pageSize = 5, pageNum = 1) {
+  async getRequestHistory(requestRecordId) {
+    const requestHistory = await _requestHistory.find({
+      requestRecord: requestRecordId
+    });
+
+    return requestHistory;
+  }
+
+  async getCreatedRequests(pageSize = 5, pageNum = 1) {
     const skips = pageSize * (pageNum - 1);
 
-    const requestHistory = await _requestHistory
+    const requests = await _requestRecord
       .find()
       .skip(skips)
       .limit(pageSize);
 
-    return requestHistory;
+    return requests;
+  }
+
+  async getCreatedRequestsByUser(userId, pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requests = await _requestRecord
+      .find({ user: userId })
+      .skip(skips)
+      .limit(pageSize);
+
+    return requests;
   }
 
   async getRequestStatus(recordId) {
@@ -152,6 +171,20 @@ class RequestRepository {
     return {
       status: step.name
     };
+  }
+
+  async getPendingRequests(reviewerId, pageSize = 5, pageNum = 1) {
+    const skips = pageSize * (pageNum - 1);
+
+    const requests = await _requestHistory
+      .find({
+        reviewer: reviewerId,
+        status: StatusHelper.APPROVE_PENDING
+      })
+      .skip(skips)
+      .limit(pageSize);
+
+    return requests;
   }
 }
 

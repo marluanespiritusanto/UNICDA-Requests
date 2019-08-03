@@ -2,7 +2,8 @@ const { Router } = require("express");
 const {
   AuthMiddleware,
   RoleMiddleware,
-  CacheMiddleware
+  CacheMiddleware,
+  ParseIntMiddleware
 } = require("../middlewares");
 const { RoleHelper, CacheTimeHelper } = require("../helpers");
 
@@ -11,7 +12,7 @@ module.exports = function({ RoleController }) {
 
   router.get(
     "",
-    CacheMiddleware(CacheTimeHelper.ONE_HOUR),
+    [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddleware],
     RoleController.getAllRoles
   );
   router.get("/:id", RoleController.getRole);

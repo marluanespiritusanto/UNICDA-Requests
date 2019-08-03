@@ -14,10 +14,7 @@ class StepController {
   async getAllSteps(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const steps = await _stepService.getAllSteps(
-      parseInt(pageSize),
-      parseInt(pageNum)
-    );
+    const steps = await _stepService.getAllSteps(pageSize, pageNum);
     return res.send(steps);
   }
 

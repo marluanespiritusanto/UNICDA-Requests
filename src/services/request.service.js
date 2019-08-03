@@ -117,10 +117,9 @@ class RequestService {
     await _requestRepository.createRequestHistory(requestHistories);
   }
 
-  async getRequestHistory(pageSize, pageNum) {
-    const requestHistory = await _requestRepository.getReqgetRequestHistoryuestStatus(
-      pageSize,
-      pageNum
+  async getRequestHistory(requestRecordId) {
+    const requestHistory = await _requestRepository.getRequestHistory(
+      requestRecordId
     );
 
     return requestHistory;
@@ -132,6 +131,35 @@ class RequestService {
     } = step;
     const reviewer = await _userRepository.getUserByRole(roleOfficer.id);
     return reviewer;
+  }
+
+  async getCreatedRequests(pageSize, pageNum) {
+    const requests = await _requestRepository.getCreatedRequests(
+      pageSize,
+      pageNum
+    );
+
+    return requests;
+  }
+
+  async getCreatedRequestsByUser(userId, pageSize, pageNum) {
+    const requests = await _requestRepository.getCreatedRequestsByUser(
+      userId,
+      pageSize,
+      pageNum
+    );
+
+    return requests;
+  }
+
+  async getPendingRequests(reviewerId, pageSize, pageNum) {
+    const requests = await _requestRepository.getPendingRequests(
+      reviewerId,
+      pageSize,
+      pageNum
+    );
+
+    return requests;
   }
 }
 

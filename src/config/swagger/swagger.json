@@ -1069,7 +1069,7 @@
         }
       }
     },
-    "/setSteps/{requestId}": {
+    "/step/setSteps/{requestId}": {
       "post": {
         "tags": ["Step"],
         "summary": "Set Steps to Request",
@@ -1105,6 +1105,173 @@
           },
           "500": {
             "description": "Server error"
+          }
+        }
+      }
+    },
+    "/request/me/created": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find my created requests",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
+          }
+        }
+      }
+    },
+    "/request/me/pending": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find my pending requests",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
+          }
+        }
+      }
+    },
+    "/request/created": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find all created requests",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "pageSize",
+            "type": "number",
+            "in": "query",
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
+          }
+        }
+      }
+    },
+    "/request/{requestRecordId}/history": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Find history of a specific Request Record",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "requestRecordId",
+            "in": "path",
+            "type": "string",
+            "description": "Request Record Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
           }
         }
       }

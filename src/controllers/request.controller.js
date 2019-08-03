@@ -14,10 +14,7 @@ class RequestController {
   async getAllRequests(req, res) {
     const { pageSize, pageNum } = req.query;
 
-    const requests = await _requestService.getAllRequests(
-      parseInt(pageSize),
-      parseInt(pageNum)
-    );
+    const requests = await _requestService.getAllRequests(pageSize, pageNum);
     return res.send(requests);
   }
 
@@ -80,13 +77,52 @@ class RequestController {
   }
 
   async getRequestHistory(req, res) {
-    const { pageSize, pageNum } = req.query;
+    const { requestRecordId } = req.params;
     const requestHistory = await _requestService.getRequestHistory(
-      parseInt(pageSize),
-      parseInt(pageNum)
+      requestRecordId
     );
 
     return res.send(requestHistory);
+  }
+
+  async getCreatedRequests(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const requests = await _requestService.getCreatedRequests(
+      pageSize,
+      pageNum
+    );
+
+    return res.send(requests);
+  }
+
+  async getCreatedRequestsByUser(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const {
+      user: { id: userId }
+    } = req;
+
+    const requests = await _requestService.getCreatedRequestsByUser(
+      userId,
+      pageSize,
+      pageNum
+    );
+
+    return res.send(requests);
+  }
+
+  async getPendingRequests(req, res) {
+    const { pageSize, pageNum } = req.query;
+    const {
+      user: { id: userId }
+    } = req;
+
+    const requests = await _requestService.getPendingRequests(
+      userId,
+      pageSize,
+      pageNum
+    );
+
+    return res.send(requests);
   }
 }
 
