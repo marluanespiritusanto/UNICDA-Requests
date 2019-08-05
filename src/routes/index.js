@@ -4,7 +4,8 @@ const compression = require("compression");
 require("express-async-errors");
 const { NotFoundMiddleware, ErrorMiddleware } = require("../middlewares");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("../config/swagger/swagger.json");
+const { SWAGGER_PATH } = require("../config");
+const swaggerDocument = require(SWAGGER_PATH);
 
 module.exports = function({
   HomeRoutes,

@@ -1275,6 +1275,44 @@
           }
         }
       }
+    },
+    "/{requestId}/createForm": {
+      "get": {
+        "tags": ["Request"],
+        "summary": "Create a request form for a request",
+        "description": "",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "type": "string",
+            "description": "Request Id",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "Authorization",
+            "description": "Auth token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Request"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid step value"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1333,7 +1371,7 @@
           "type": "string",
           "format": "string"
         },
-        "passwotd": {
+        "password": {
           "type": "string",
           "format": "string"
         }
