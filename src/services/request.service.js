@@ -161,6 +161,15 @@ class RequestService {
 
     return requests;
   }
+
+  async approveRequest(reviewerId, requestHistoryId) {
+    const nextRequestStep = await _requestRepository.approveRequest(
+      reviewerId,
+      requestHistoryId
+    );
+
+    return nextRequestStep;
+  }
 }
 
 module.exports = RequestService;

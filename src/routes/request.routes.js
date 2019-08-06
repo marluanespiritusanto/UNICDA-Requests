@@ -62,6 +62,11 @@ module.exports = function({ RequestController }) {
     AuthMiddleware,
     RequestController.createRequisition
   );
+  router.post(
+    "/approve/:requestHistoryId",
+    AuthMiddleware,
+    RequestController.approveRequest
+  );
 
   return router;
 };

@@ -14,7 +14,7 @@ const RequestHistorychema = new Schema(
       ref: "User",
       required: true
     },
-    completed: { type: Boolean, required: false },
+    completed: { type: Boolean, default: false, required: false },
     requestRecord: {
       type: Schema.Types.ObjectId,
       ref: "RequestRecord",

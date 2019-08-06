@@ -124,6 +124,20 @@ class RequestController {
 
     return res.send(requests);
   }
+
+  async approveRequest(req, res) {
+    const {
+      user: { id: reviewerId }
+    } = req;
+    const { requestHistoryId } = req.params;
+
+    const response = await _requestService.approveRequest(
+      reviewerId,
+      requestHistoryId
+    );
+
+    return res.send(response);
+  }
 }
 
 module.exports = RequestController;

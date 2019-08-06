@@ -179,12 +179,44 @@ class RequestRepository {
     const requests = await _requestHistory
       .find({
         reviewer: reviewerId,
+        completed: false,
         status: StatusHelper.APPROVE_PENDING
       })
       .skip(skips)
       .limit(pageSize);
 
     return requests;
+  }
+
+  async approveRequest(reviewerId, requestHistoryId) {
+    const hasPendingApprovement = await _requestHistory
+      .findByIdAndUpdate(
+        {
+          _id: requestHistoryId,
+          reviewer: reviewerId
+        },
+        { completed: true, status: StatusHelper.APPROVED },
+        { new: true }
+      )
+      .populate("requestStep");
+
+    const {
+      requestStep: { order: currentOrder },
+      requestRecord
+    } = hasPendingApprovement;
+
+    let next = await _requestHistory
+      .find({ requestRecord })
+      .populate("requestStep");
+
+    next = next.find(
+      ({ requestStep: { order } }) => order === currentOrder + 1
+    );
+
+    next.status = StatusHelper.APPROVE_PENDING;
+    await next.save();
+
+    return next;
   }
 }
 
