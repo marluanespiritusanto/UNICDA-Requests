@@ -7,7 +7,7 @@ class RequestController {
 
   async getRequest(req, res) {
     const { requestId } = req.params;
-    const request = await _requestService.getRequest(id);
+    const request = await _requestService.getRequest(requestId);
     return res.send(request);
   }
 
@@ -27,13 +27,13 @@ class RequestController {
   async updateRequest(req, res) {
     const { body } = req;
     const { requestId } = req.params;
-    const updatedRequest = await _requestService.updateRequest(id, body);
+    const updatedRequest = await _requestService.updateRequest(requestId, body);
     return res.send(updatedRequest);
   }
 
   async deleteRequest(req, res) {
     const { requestId } = req.params;
-    const deletedUser = await _requestService.deleteRequest(id);
+    const deletedUser = await _requestService.deleteRequest(requestId);
 
     return res.send(deletedUser);
   }
