@@ -6,7 +6,7 @@ class RequestController {
   }
 
   async getRequest(req, res) {
-    const { id } = req.params;
+    const { requestId } = req.params;
     const request = await _requestService.getRequest(id);
     return res.send(request);
   }
@@ -26,24 +26,16 @@ class RequestController {
 
   async updateRequest(req, res) {
     const { body } = req;
-    const { id } = req.params;
+    const { requestId } = req.params;
     const updatedRequest = await _requestService.updateRequest(id, body);
     return res.send(updatedRequest);
   }
 
   async deleteRequest(req, res) {
-    const { id } = req.params;
+    const { requestId } = req.params;
     const deletedUser = await _requestService.deleteRequest(id);
 
     return res.send(deletedUser);
-  }
-
-  async setStepToRequest(req, res) {
-    const { id } = req.params;
-    const { stepId } = req.body;
-    const step = await _requestService.setStepToRequest(id, stepId);
-
-    return res.send(step);
   }
 
   async createRequestForm(req, res) {

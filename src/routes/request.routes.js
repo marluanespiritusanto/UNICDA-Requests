@@ -35,19 +35,19 @@ module.exports = function({ RequestController }) {
     [CacheMiddleware(CacheTimeHelper.ONE_HOUR), ParseIntMiddleware],
     RequestController.getAllRequests
   );
-  router.get("/:id", RequestController.getRequest);
+  router.get("/:requestId", RequestController.getRequest);
   router.post(
     "",
     [AuthMiddleware, RoleMiddleware(RoleHelper.ADMIN)],
     RequestController.createRequest
   );
   router.patch(
-    "/:id",
+    "/:requestId",
     [AuthMiddleware, RoleMiddleware(RoleHelper.ADMIN)],
     RequestController.updateRequest
   );
   router.delete(
-    "/:id",
+    "/:requestId",
     [AuthMiddleware, RoleMiddleware(RoleHelper.ADMIN)],
     RequestController.deleteRequest
   );
