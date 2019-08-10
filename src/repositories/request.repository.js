@@ -129,9 +129,18 @@ class RequestRepository {
   }
 
   async getRequestHistory(requestRecordId) {
-    const requestHistory = await _requestHistory.find({
-      requestRecord: requestRecordId
-    });
+    const requestHistory = await _requestHistory
+      .find({
+        requestRecord: requestRecordId
+      })
+      .populate("reviewer")
+      .populate({
+        path: "requestStep",
+        populate: {
+          path: "step",
+          model: "Step"
+        }
+      });
 
     return requestHistory;
   }
