@@ -8,5 +8,5 @@ module.exports = {
   Step: require("./step.model"),
   RequestStep: require("./requestStep.model"),
   RequestRecord: require("./requestRecord.model"),
-  RequestFormValue: require("./RequestFormValue.model")
+  RequestFormValue: require("./requestFormValue.model")
 };
