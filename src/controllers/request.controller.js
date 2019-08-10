@@ -139,6 +139,13 @@ class RequestController {
 
     return res.send(deletedRequest);
   }
+
+  async disapproveRequest(req, res) {
+    const { requestHistoryId } = req.params;
+    const disapprovedRequest = await disapproveRequest(requestHistoryId);
+
+    return res.send(disapprovedRequest);
+  }
 }
 
 module.exports = RequestController;

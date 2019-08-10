@@ -178,6 +178,10 @@ class RequestService {
   async deleteRequestRecord(requestRecordId) {
     return await _requestRepository.deleteRequestRecord(requestRecordId);
   }
+
+  async disapproveRequest(requestHistoryId) {
+    return await _requestRepository.disapproveRequest(requestHistoryId);
+  }
 }
 
 module.exports = RequestService;
