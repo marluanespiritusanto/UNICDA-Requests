@@ -47,6 +47,13 @@ class StepController {
 
     return res.send(createdRequestSteps);
   }
+
+  async getStepsByRequest(req, res) {
+    const { requestId } = req.params;
+    const steps = await _stepService.getStepsByRequest(requestId);
+
+    return res.send(steps);
+  }
 }
 
 module.exports = StepController;

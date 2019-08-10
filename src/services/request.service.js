@@ -67,8 +67,11 @@ class RequestService {
   }
 
   async createRequisition(userId, requestId, forms) {
-    await this.saveRequestForm(forms);
-    const requestRecord = await this.createRequestRecord(requestId, userId);
+    const requestRecord = await this.createRequestRecord(
+      requestId,
+      userId,
+      forms
+    );
     const requestSteps = await this.getRequestSteps(requestId);
     await this.createRequestHistory(requestSteps, requestRecord);
 
@@ -86,10 +89,11 @@ class RequestService {
     return requestSteps;
   }
 
-  async createRequestRecord(request, user) {
+  async createRequestRecord(request, user, forms) {
     const requestRecord = await _requestRepository.createRequestRecord({
       request,
-      user
+      user,
+      forms
     });
 
     return requestRecord;
@@ -169,6 +173,10 @@ class RequestService {
     );
 
     return nextRequestStep;
+  }
+
+  async deleteRequestRecord(requestRecordId) {
+    return await _requestRepository.deleteRequestRecord(requestRecordId);
   }
 }
 

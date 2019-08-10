@@ -130,6 +130,15 @@ class RequestController {
 
     return res.send(response);
   }
+
+  async deleteRequestRecord(req, res) {
+    const { requestRecordId } = req.params;
+    const deletedRequest = await _requestService.deleteRequestRecord(
+      requestRecordId
+    );
+
+    return res.send(deletedRequest);
+  }
 }
 
 module.exports = RequestController;

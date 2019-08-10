@@ -5,7 +5,8 @@ let _request,
   _requestHistory,
   _formType,
   _requestStep,
-  _requestRecord = null;
+  _requestRecord,
+  _requestFormValue = null;
 
 class RequestRepository {
   constructor({
@@ -14,7 +15,8 @@ class RequestRepository {
     FormType,
     RequestHistory,
     RequestRecord,
-    RequestStep
+    RequestStep,
+    RequestFormValue
   }) {
     _request = Request;
     _requestForm = RequestForm;
@@ -22,6 +24,7 @@ class RequestRepository {
     _requestHistory = RequestHistory;
     _requestRecord = RequestRecord;
     _requestStep = RequestStep;
+    _requestFormValue = RequestFormValue;
   }
 
   async get(id) {
@@ -96,6 +99,11 @@ class RequestRepository {
   }
 
   async createRequestRecord(requestRecord) {
+    let { forms } = requestRecord;
+    const formIds = (await _requestFormValue.create(forms)).map(
+      form => form._id
+    );
+    requestRecord.forms = formIds;
     const createdRequestRecord = await _requestRecord.create([requestRecord]);
     return createdRequestRecord[0];
   }
@@ -219,6 +227,15 @@ class RequestRepository {
     await next.save();
 
     return next;
+  }
+
+  async deleteRequestRecord(requestRecordId) {
+    const deletedRequestRecord = await _requestRecord.findByIdAndDelete(
+      requestRecordId
+    );
+    await _requestHistory.deleteMany({ requestRecord: requestRecordId });
+
+    return true;
   }
 }
 

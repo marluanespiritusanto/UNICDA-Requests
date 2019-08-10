@@ -14,6 +14,12 @@ const RequestRecordSchema = new Schema(
       ref: "Request",
       required: true
     },
+    requestFormValue: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "RequestFormValue"
+      }
+    ],
     status: { type: String, default: StatusHelper.APPROVE_PENDING }
   },
   { timestamps: { createdAt: true, updatedAt: true } }

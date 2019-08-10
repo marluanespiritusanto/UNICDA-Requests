@@ -67,6 +67,11 @@ module.exports = function({ RequestController }) {
     AuthMiddleware,
     RequestController.approveRequest
   );
+  router.delete(
+    "/remove/:requestRecordId",
+    AuthMiddleware,
+    RequestController.deleteRequestRecord
+  );
 
   return router;
 };

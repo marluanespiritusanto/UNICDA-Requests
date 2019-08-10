@@ -50,6 +50,10 @@ class StepRepository {
   async setStepToRequest(steps) {
     return await _requestStep.create(steps);
   }
+
+  async getStepsByRequest(requestId) {
+    return await _requestStep.find({ request: requestId });
+  }
 }
 
 module.exports = StepRepository;

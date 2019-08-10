@@ -55,7 +55,8 @@ const {
   RequestHistory,
   Step,
   RequestStep,
-  RequestRecord
+  RequestRecord,
+  RequestFormValue
 } = require("../models");
 
 const container = createContainer();
@@ -113,7 +114,8 @@ container
     RequestHistory: asValue(RequestHistory),
     Step: asValue(Step),
     RequestStep: asValue(RequestStep),
-    RequestRecord: asValue(RequestRecord)
+    RequestRecord: asValue(RequestRecord),
+    RequestFormValue: asValue(RequestFormValue)
   });
 
 module.exports = container;

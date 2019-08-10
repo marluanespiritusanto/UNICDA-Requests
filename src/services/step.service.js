@@ -44,6 +44,11 @@ class StepService {
 
     return createdRequestSteps;
   }
+
+  async getStepsByRequest(requestId) {
+    const steps = await _stepRepository.getStepsByRequest(requestId);
+    return steps;
+  }
 }
 
 module.exports = StepService;

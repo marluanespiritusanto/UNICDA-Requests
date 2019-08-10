@@ -37,6 +37,11 @@ module.exports = function({ StepController }) {
     [AuthMiddleware, RoleMiddleware("ADMIN")],
     StepController.setStepToRequest
   );
+  router.get(
+    "/getSteps/:requestId",
+    [AuthMiddleware],
+    StepController.getStepsByRequest
+  );
 
   return router;
 };
