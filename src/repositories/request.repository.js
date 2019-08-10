@@ -264,14 +264,28 @@ class RequestRepository {
     return true;
   }
 
-  async disapproveRequest(requestRecordId) {}
-
-  async getRecordFormValues(requestHistoryId) {
-    const { requestFormValues } = await _requestRecord.findById(
-      requestRecordId
+  async disapproveRequest(requestHistoryId) {
+    const { requestRecord } = await _requestHistory.findByIdAndUpdate(
+      requestHistoryId,
+      { status: StatusHelper.CANCELLED },
+      { new: true }
     );
 
-    return requestFormValues;
+    await _requestRecord.findByIdAndUpdate(
+      requestRecord,
+      { status: StatusHelper.CANCELLED },
+      { new: true }
+    );
+
+    return true;
+  }
+
+  async getRecordFormValues(requestHistoryId) {
+    const { requestFormValue } = await _requestRecord
+      .findById(requestHistoryId)
+      .populate("requestFormValue");
+
+    return requestFormValue;
   }
 }
 
