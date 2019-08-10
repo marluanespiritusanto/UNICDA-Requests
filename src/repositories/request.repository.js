@@ -265,6 +265,14 @@ class RequestRepository {
   }
 
   async disapproveRequest(requestHistoryId) {}
+
+  async getRecordFormValues(requestHistoryId) {
+    const { requestFormValues } = await _requestRecord.findById(
+      requestHistoryId
+    );
+
+    return requestFormValues;
+  }
 }
 
 module.exports = RequestRepository;

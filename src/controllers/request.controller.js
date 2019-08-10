@@ -142,9 +142,18 @@ class RequestController {
 
   async disapproveRequest(req, res) {
     const { requestHistoryId } = req.params;
-    const disapprovedRequest = await disapproveRequest(requestHistoryId);
+    const disapprovedRequest = await _requestService.disapproveRequest(
+      requestHistoryId
+    );
 
     return res.send(disapprovedRequest);
+  }
+
+  async getRecordFormValues(req, res) {
+    const { requestHistoryId } = req.params;
+    const values = await _requestService.getRecordFormValues(requestHistoryId);
+
+    return res.send(values);
   }
 }
 
