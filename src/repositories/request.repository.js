@@ -100,10 +100,9 @@ class RequestRepository {
 
   async createRequestRecord(requestRecord) {
     let { forms } = requestRecord;
-    const formIds = (await _requestFormValue.create(forms)).map(
-      form => form._id
-    );
-    requestRecord.forms = formIds;
+    const formIds = await _requestFormValue.create(forms);
+    delete requestRecord.forms;
+    requestRecord.requestFormValue = formIds;
     const createdRequestRecord = await _requestRecord.create([requestRecord]);
     return createdRequestRecord[0];
   }
@@ -201,6 +200,24 @@ class RequestRepository {
         completed: false,
         status: StatusHelper.APPROVE_PENDING
       })
+      .populate({
+        path: "requestRecord",
+        populate: [
+          {
+            path: "request",
+            model: "Request"
+          },
+          {
+            path: "requestFormValue",
+            model: "RequestFormValue"
+          },
+          ,
+          {
+            path: "user",
+            model: "User"
+          }
+        ]
+      })
       .skip(skips)
       .limit(pageSize);
 
@@ -246,6 +263,8 @@ class RequestRepository {
 
     return true;
   }
+
+  async disapproveRequest(requestHistoryId) {}
 }
 
 module.exports = RequestRepository;
