@@ -15,12 +15,15 @@ const RequestRecordSchema = new Schema(
       required: true
     },
     requestFormValue: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "RequestFormValue"
-      }
+      { type: Schema.Types.ObjectId, ref: "RequestFormValue" }
     ],
-    status: { type: String, default: StatusHelper.APPROVE_PENDING }
+    status: { type: String, default: StatusHelper.APPROVE_PENDING },
+    createdTime: {
+      type: String,
+      default: new Date().toLocaleString("en-US", {
+        timeZone: "America/Santo_Domingo"
+      })
+    }
   },
   { timestamps: { createdAt: true, updatedAt: true } }
 );
