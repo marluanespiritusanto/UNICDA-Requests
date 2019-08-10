@@ -77,7 +77,7 @@ module.exports = function({ RequestController }) {
     AuthMiddleware,
     RequestController.deleteRequestRecord
   );
-  router.delete(
+  router.get(
     "/formValues/:requestRecordId",
     AuthMiddleware,
     RequestController.getRecordFormValues

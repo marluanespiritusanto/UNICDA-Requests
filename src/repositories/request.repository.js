@@ -264,11 +264,11 @@ class RequestRepository {
     return true;
   }
 
-  async disapproveRequest(requestHistoryId) {}
+  async disapproveRequest(requestRecordId) {}
 
   async getRecordFormValues(requestHistoryId) {
     const { requestFormValues } = await _requestRecord.findById(
-      requestHistoryId
+      requestRecordId
     );
 
     return requestFormValues;

@@ -150,8 +150,8 @@ class RequestController {
   }
 
   async getRecordFormValues(req, res) {
-    const { requestHistoryId } = req.params;
-    const values = await _requestService.getRecordFormValues(requestHistoryId);
+    const { requestRecordId } = req.params;
+    const values = await _requestService.getRecordFormValues(requestRecordId);
 
     return res.send(values);
   }

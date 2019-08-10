@@ -182,6 +182,14 @@ class RequestService {
   async disapproveRequest(requestHistoryId) {
     return await _requestRepository.disapproveRequest(requestHistoryId);
   }
+
+  async getRecordFormValues(requestRecordId) {
+    const values = await _requestRepository.getRecordFormValues(
+      requestRecordId
+    );
+
+    return values;
+  }
 }
 
 module.exports = RequestService;
