@@ -144,6 +144,7 @@ class RequestRepository {
 
     const requests = await _requestRecord
       .find({ user: userId })
+      .populate("request")
       .skip(skips)
       .limit(pageSize);
 
