@@ -52,7 +52,9 @@ class StepRepository {
   }
 
   async getStepsByRequest(requestId) {
-    return await _requestStep.find({ request: requestId });
+    const steps = await _requestStep.find({ request: requestId });
+
+    return steps;
   }
 }
 
